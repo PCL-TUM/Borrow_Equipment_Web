@@ -1,0 +1,101 @@
+    <!-- </div> -->
+</div>
+<!-- end container [ ส่วนปิดขององค์ประกอบที่อยุ่ด้านล่างปกของเว็บไซต์ ที่แต่ละหน้าจัดวางไม่เหมือนกัน ] -->
+
+<!-- begin real time [ส่วนของการแสดง 'สถานะ : เวลาปัจจุบัน' แบบ Real Time จะอยูด้านขวาล่างสุดของเว็บไซต์ทุกหน้า ] -->
+<% if(title == "ทำรายการยืม" || title == "ทำรายการคืน"){ %> <!-- เงื่อนไขถ้า title เป็น 'ทำรายการยืม' หรือ 'ทำรายการคืน' จะทำการสร้าง element แบบแค่ขึ้นบรรทัดใหม่ โดไม่ลดขนาดของ column -->
+    <div class="row mx-3 mb-4"> <!-- (row): ขึ้นบรรทัดใหม่, (mx-3): ปรับความกว้างภายในของ element แนวแกน x ให้ลดลง 16px, (mb-4): ปรับความสูงด้านล่างภายนอกของ element 24px-->
+        <script>
+            function display_ct5() {
+                var x = new Date()              // กำหนดตัวแปร x ให้รับค่า 'วันเวลาปัจจุบัน'
+                var month = x.getMonth()+1;     // กำหนดตัวแปร month ให้รับค่า 'เดือน' ปัจจุบันแล้ว + เพิ่มไปอีก 1 เดือน
+                var day = x.getDate();          // กำหนดตัวแปร day ให้รับค่า 'วัน' ปัจจุบัน
+                var year = x.getFullYear();     // กำหนดตัวแปร year ให้รับค่า 'ปี' ปัจจุบัน
+    
+                var x3 = day + '/' + month + '/' + (year+543); // กำหนดตัวแปร x3 เก็บค่าเป็น ' วัน/เดือน/ปี ' (ปีที่ได้จะเป็น ค.ศ. ต้องนำมา + เพิ่ม 543 จะได้ค่าเป็น พ.ศ.)
+    
+                // time part //
+                var hour = x.getHours();        // กำหนดตัวแปร hour ให้รับค่า 'ชั่วโมง' ปัจจุบัน
+                var minute = x.getMinutes();    // กำหนดตัวแปร minute ให้รับค่า 'นาที' ปัจจุบัน
+                var second = x.getSeconds();    // กำหนดตัวแปร second ให้รับค่า 'วินาที' ปัจจุบัน
+                    if(hour < 10 ) { hour='0' + hour; }         // เงื่อนไขให้เพิ่มเลข 0 เมื่อค่า 'ชั่วโมง' มีเลขน้อยกว่า 10
+                    if(minute < 10 ) { minute='0' + minute; }   // เงื่อนไขให้เพิ่มเลข 0 เมื่อค่า 'นาที' มีเลขน้อยกว่า 10
+                    if(second < 10) { second='0' + second; }    // เงื่อนไขให้เพิ่มเลข 0 เมื่อค่า 'วินาที' มีเลขน้อยกว่า 10
+                var x3 = x3 + ' - ' +  hour +':'+ minute + ':' + second + ' น.';    // กำหนดตัวแปร x3 เก็บค่าเป็น ' วัน/เดือน/ปี - ชั่วโมง:นาที:วินาที น.'
+                
+                document.getElementById('ct5').innerHTML = x3;  // กำหนดให้ element ที่มี id= ct5 จะแสดงค่าในตัวแปร x3 คือ ' วัน/เดือน/ปี - ชั่วโมง:นาที:วินาที น.'
+            display_c5();
+            }
+            function display_c5(){
+                var refresh = 1000;                                 // กำหนดให้ตัวแปร refresh มีค่า 1000 หรือ มิลลิวินาที
+                    mytime = setTimeout('display_ct5()',refresh)    // ทำการเรียกใช้งาน function display_c5 ทุกๆ มิลลิวินาที
+            }
+            display_c5()
+        </script>
+    
+        <span>สถานะ : เวลาปัจจุบัน <span id='ct5'></span></span> <!-- สร้าง element ให้แสดงตัวหนังสือ 'สถานะ : เวลาปัจจุบัน' และสร้าง element ให้แสดงตัวหนังสือที่ element นี้มี id= ct5 -->
+    </div>
+<% } else { %> <!-- ถ้าไม่ตรงกับเงื่อนไขข้างบน จะทำการสร้าง element โดยปรับความสูงด้านบนแบบอัตโนมัติ และจัด column ใหม่ให้ความกว้างลดลง ให้เท่ากับขนาดของตารางแสดงข้อมูลของหน้านั้นๆ -->
+    <div class="mt-auto"> <!-- (mt-auto): ปรับความสูงด้านบนของ element แบบอัตโนมัติ -->
+        <div class="container-fluid"> <!-- (container-fluid): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 100% -->
+            <div class="container-xl"> <!-- (container-xl): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 80% -->
+                <div class="row px-1 mb-4"> <!-- (row): ขึ้นบรรทัดใหม่, (px-1): ปรับความกว้างภายในของ element แนวแกน x ให้ลดลง 4px, (mb-4): ปรับความสูงด้านล่างภายนอกของ element 24px-->
+                    <script>
+                        function display_ct5() {
+                            var x = new Date()              // กำหนดตัวแปร x ให้รับค่า 'วันเวลาปัจจุบัน'
+                            var month = x.getMonth()+1;     // กำหนดตัวแปร month ให้รับค่า 'เดือน' ปัจจุบันแล้ว + เพิ่มไปอีก 1 เดือน
+                            var day = x.getDate();          // กำหนดตัวแปร day ให้รับค่า 'วัน' ปัจจุบัน
+                            var year = x.getFullYear();     // กำหนดตัวแปร year ให้รับค่า 'ปี' ปัจจุบัน
+                
+                            var x3 = day + '/' + month + '/' + (year+543); // กำหนดตัวแปร x3 เก็บค่าเป็น ' วัน/เดือน/ปี ' (ปีที่ได้จะเป็น ค.ศ. ต้องนำมา + เพิ่ม 543 จะได้ค่าเป็น พ.ศ.)
+                
+                            // time part //
+                            var hour = x.getHours();        // กำหนดตัวแปร hour ให้รับค่า 'ชั่วโมง' ปัจจุบัน
+                            var minute = x.getMinutes();    // กำหนดตัวแปร minute ให้รับค่า 'นาที' ปัจจุบัน
+                            var second = x.getSeconds();    // กำหนดตัวแปร second ให้รับค่า 'วินาที' ปัจจุบัน
+                                if(hour < 10 ) { hour='0' + hour; }         // เงื่อนไขให้เพิ่มเลข 0 เมื่อค่า 'ชั่วโมง' มีเลขน้อยกว่า 10
+                                if(minute < 10 ) { minute='0' + minute; }   // เงื่อนไขให้เพิ่มเลข 0 เมื่อค่า 'นาที' มีเลขน้อยกว่า 10
+                                if(second < 10) { second='0' + second; }    // เงื่อนไขให้เพิ่มเลข 0 เมื่อค่า 'วินาที' มีเลขน้อยกว่า 10
+                            var x3 = x3 + ' - ' +  hour +':'+ minute + ':' + second + ' น.';    // กำหนดตัวแปร x3 เก็บค่าเป็น ' วัน/เดือน/ปี - ชั่วโมง:นาที:วินาที น.'
+                            
+                            document.getElementById('ct5').innerHTML = x3;  // กำหนดให้ element ที่มี id= ct5 จะแสดงค่าในตัวแปร x3 คือ ' วัน/เดือน/ปี - ชั่วโมง:นาที:วินาที น.'
+                        display_c5();
+                        }
+                        function display_c5(){
+                            var refresh = 1000;                                 // กำหนดให้ตัวแปร refresh มีค่า 1000 หรือ มิลลิวินาที
+                                mytime = setTimeout('display_ct5()',refresh)    // ทำการเรียกใช้งาน function display_c5 ทุกๆ มิลลิวินาที
+                        }
+                        display_c5()
+                    </script>
+                <span>สถานะ : เวลาปัจจุบัน <span id='ct5'></span></span> <!-- สร้าง element ให้แสดงตัวหนังสือ 'สถานะ : เวลาปัจจุบัน' และสร้าง element ให้แสดงตัวหนังสือที่ element นี้มี id= ct5 -->
+            </div>
+        </div>
+    </div>
+<% } %>
+<!-- end real time -->
+
+</body>
+<!-- end body -->
+
+</html>
+<!-- end html -->
+
+<!-- import script [ ส่วนการเรียก library javascript มาใช้ในเว็บไซต์ ] -->
+<script type="text/javascript" src="../../node_modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="../../node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="../../node_modules/dropzone/dist/dropzone-min.js"></script>
+<script type="text/javascript" src="../../node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript" src="../../node_modules/socket.io/client-dist/socket.io.js"></script>
+
+<script>
+    // [ ส่วนของการติดต่อกับ Server สำหรับการแจ้งเตือน ]
+    let socket = io.connect("http://157.230.254.198:3000", { reconnect: true }); // กำหนด port ในการติดต่อกับ server
+        socket.on("dataNoti", function (data) {
+        if (data) { // ตรวจสอบถ้ารับค่า data จาก server จะทำการเพิ่ม Class ไปในแถบเมนู 'แจ้งเตือน' 
+            $('#datanoti').addClass('position-absolute p-1 ms-1 bg-danger shadow-lg rounded-circle'); // [ (position-absolute): กำหนดตำแหน่งของ element ให้อยู่ด้านบนทางขาว, (bg-danger shadow-lg rounded-circle): ทำให้ element เป็นวงกลม พื้นหหลังสีแดงและเพิ่มเงา,]
+        }
+        $("#clock").html(data);
+        });
+</script>

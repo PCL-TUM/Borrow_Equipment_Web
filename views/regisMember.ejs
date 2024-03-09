@@ -1,0 +1,746 @@
+<%- include('./template/header'); -%>   <!-- เรียกใช้ไฟล์ header -->
+<div class="container-xl">  <!-- [ (container-fluid): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 100% -->
+    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+            <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                <div class="col-lg-12 text-end mb-3">   <div class="col-lg-12 text-end mb-3">   <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12, (text-center): จัดองค์ประกอบให้อยู่ทางขวา -->
+                    <div class="btn btn-primary shadow-sm" id="add_NewMember"><i class="fas fa-plus me-2"></i>เพิ่มข้อมูลบุคลากร</div>   <!-- สร้างปุ่ม 'เพิ่มข้อมูลบุคลากร' มี id=add_NewMember มีเงาและหลังสีนำเงิน / (<i class="fas fa-plus me-2"></i>):เป็น icon เครื่องหมายบวก -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+            <div class="card shadow-sm mb-3 collapse" id="MemberForm">   <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px มี id=MemberForm -->
+                <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                        <div class="col-lg-6">      <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                            <h5 class="pt-2">ข้อมูลบุคลากร</h5>    <!-- tag สร้างข้อความ ' ข้อมูลบุคลากร ' -->
+                        </div>
+                    </div>
+                    <hr class="mb-4">   <!-- tag สร้างเส้นตรง -->
+                    <div class="row mx-5" id="Member_validate"> <!-- (row): ขึ้นบรรทัดใหม่, มี id=Member_validate -->
+                        <div class="col-lg-8">  <!-- (col-lg-8): กำหนด column เป็น 8 จาก 12 -->
+                            <div class="row mb-3">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <label class="form-label">รหัส RFID </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รหัส RFID ' -->
+                                    <div class="input-group">   <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                        <input type="text" class="form-control shadow-sm rounded-3 me-2" id="member_rfid" maxlength="10" required>   <!-- สร้างกล่องกรอกข้อความ มี id=member_rfid และ จำกัดข้อความสูงสุด 10 ตัวอักษร -->
+                                        <div class="btn btn-warning shadow-sm rounded-3" id="clear_rfid">เคลียร์ Tag</div>    <!-- สร้างปุ่ม 'เคลียร์ Tag' มี id=clear_rfid มีเงาและหลังสีเหลือง -->
+                                        <div class="invalid-feedback">
+                                            กรุณาระบุ รหัส RFID    <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-6"> <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                                    <label class="form-label">รหัสพนักงาน</label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รหัสพนักงาน' -->
+                                    <input type="text" class="form-control shadow-sm rounded-3" id="member_username" required>  <!-- สร้างกล่องกรอกข้อความ มี id=member_username -->
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ รหัสพนักงาน       <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">  <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                                    <label class="form-label">รหัสผ่าน</label>    <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รหัสผ่าน' -->
+                                    <input type="password" class="form-control shadow-sm rounded-3" id="member_password" required>  <!-- สร้างกล่องกรอกข้อความ มี id=member_password -->
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ รหัสผ่าน          <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                        <div class="col-sm-5">  <!-- (col-sm-5): กำหนด column เป็น 5 จาก 12 -->
+                                            <label class="form-label">ชื่อ</label>    <!-- สร้างชื่อของกล่องกรอกข้อความ : 'ชื่อ' -->
+                                            <input type="text" class="form-control shadow-sm rounded-3" id="member_firstname" required> <!-- สร้างกล่องกรอกข้อความ มี id=member_firstname -->
+                                            <div class="invalid-feedback">
+                                                กรุณาระบุ ชื่อพนักงาน    <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">  <!-- (col-sm-5): กำหนด column เป็น 5 จาก 12 -->
+                                            <label class="form-label">นามสกุล</label>    <!-- สร้างชื่อของกล่องกรอกข้อความ : 'นามสกุล' -->
+                                            <input type="text" class="form-control shadow-sm rounded-3" id="member_lastname" required>  <!-- สร้างกล่องกรอกข้อความ มี id=member_lastname -->
+                                            <div class="invalid-feedback">
+                                                กรุณาระบุ นามสกุล      <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">  <!-- (col-sm-2): กำหนด column เป็น 2 จาก 12 -->
+                                            <label class="form-label">เพศ</label>   <!-- สร้างชื่อของกล่องกรอกข้อความ : 'เพศ' -->
+                                            <select class="form-select shadow-sm rounded-3" id="member_gender" required>    <!-- สร้างกล่องเมนูตัวเลือก มี id=member_gender -->
+                                                <option value=""></option>
+                                                <option value="0">ชาย</option>  
+                                                <option value="1">หญิง</option>
+                                            </select>
+                                            <div class="invalid-feedback">  
+                                                กรุณาระบุ เพศ         <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <label class="form-label">เบอร์โทรศัพท์</label>    <!-- สร้างชื่อของกล่องกรอกข้อความ : 'เบอร์โทรศัพท์' -->
+                                    <input type="text" class="form-control shadow-sm rounded-3" id="member_tel" maxlength="10" required>    <!-- สร้างกล่องกรอกข้อความ มี id=member_tel และ จำกัดข้อความสูงสุด 10 ตัวอักษร -->
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ เบอร์โทรศัพท์  <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">  <!-- (col-lg-4): กำหนด column เป็น 4 จาก 12 -->
+                            <div class="row mx-2 mb-3"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <label class="form-label">รูปภาพบุคลากร</label>   <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รูปภาพบุคลากร' -->
+                                <div name="Member_image" id="file" class="dropzone text-center shadow-sm" style="background-color:#ffff; border-color:#ced4da; border-radius: 1.25rem;"> <!-- สร้างกล่องสำหรับเพื่อไฟล์เป็น Dropzone มี id=Member_image และ จำกัดข้อความสูงสุด 10 ตัวอักษร -->
+                                    <div class="dz-default dz-message" style="height: 158px;">
+                                        <span>
+                                            <span style="font-size:15px;">
+                                                <i class="fas fa-cloud-upload-alt" style="margin-top: 43px; font-size:50px;"></i>       
+                                                <p>เพิ่มรูปภาพบุคลากร</p>    <!-- กำหนดข้อความก่อรเพิ่มไฟล์ -->
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-3">   <!-- tag สร้างเส้นตรง -->
+                    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                        <div class="col-lg-12 text-end">    <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12, (text-center): จัดองค์ประกอบให้อยู่ทางขวา -->
+                            <div class="btn btn-outline-secondary shadow-sm" id="cancel_addMember"><i class="fas fa-times me-2"></i>ยกเลิก</div> <!-- สร้างปุ่ม 'ยกเลิก' มี id=cancel_addMember มีเงาและหลังสีใสกรอบสีเทา / (<i class="fas fa-times me-2"></i>):เป็น icon กากบาท -->
+                            <div class="btn btn-success shadow-sm" id="submit_addMember"><i class="fas fa-save me-2"></i>บันทึก</div> <!-- สร้างปุ่ม 'บันทึก' มี id=submit_addMember มีเงาและพื้นหลังสีเขียว / (<i class="fas fa-check me-2"></i>):เป็น icon แผ่นดิสก์ -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+            <div class="card shadow-sm mb-3">   <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                        <div class="col-lg-7">  <!-- (col-lg-7): กำหนด column เป็น 7 จาก 12 -->
+                            <h5 class="pt-2">ตารางข้อมูลบุคลากร</h5>   <!-- tag สร้างข้อความ ' ตารางข้อมูลบุคลากร ' -->
+                        </div>
+                        <div class="col-lg-5 text-end"> <!-- (col-lg-5): กำหนด column เป็น 5 จาก 12, (text-center): จัดองค์ประกอบให้อยู่ทางขวา -->
+                            <div class="input-group mb-1">  <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <input type="text" class="form-control me-2 shadow-sm rounded-3" id="MemberSearch" placeholder="ชื่อ, รหัสพนักงาน, เบอร์โทรศัพท์"> <!-- สร้างกล่องกรอกข้อความ มี id=equipmentSearch และมีลายน้ำในกล่องเป็น ' ชื่อ, รหัสพนักงาน, เบอร์โทรศัพท์ ' -->
+                                <div class="btn btn-secondary shadow-sm rounded-3" id="search"><i class="fas fa-search me-2"></i>ค้นหา</div> <!-- สร้างปุ่ม 'ค้นหา' มี id=search มีเงาและพื้นหลังสีเขียว / (<i class="fas fa-search me-2"></i>):เป็น icon แว่นขยาย -->
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4">   <!-- tag สร้างเส้นตรง -->
+
+                    <table class=" display nowrap mb-3" id="table_id">  <!-- สร้างตาราง ที่มี id= table_id (display nowrap): กำหนดให้สิ่งที่มีความยาวเกิน element นี้จะถูกซ่อนอยู่เบื่องหลัง, (mt-1 mb-3): ปรับระยะห่างภายนอกด้านบน 4px และด้านล่าง 16px -->
+                        <thead class="table-navy-blue"> <!-- (table-navy-blue): กำหนดให้แถบคอลัมน์เป็นสีกรม  -->
+                            <tr>
+                                <th class="text-center">ลำดับ</th>    <!-- กำหนดชื่อคอลัมน์เป็น 'ลำดับ' -->
+                                <th class="text-center">รหัส RFID</th>   <!-- กำหนดชื่อคอลัมน์เป็น 'รหัส RFID' -->
+                                <th class="text-center">รหัสพนักงาน</th>  <!-- กำหนดชื่อคอลัมน์เป็น 'รหัสพนักงาน' -->
+                                <th class="text-center">ชื่อ</th> <!-- กำหนดชื่อคอลัมน์เป็น 'ชื่อ' -->
+                                <th class="text-center">เพศ</th>    <!-- กำหนดชื่อคอลัมน์เป็น 'เพศ' -->
+                                <th class="text-center">เบอร์โทรศัพท์</th> <!-- กำหนดชื่อคอลัมน์เป็น 'เบอร์โทรศัพท์' -->
+                                <th class="text-center">จัดการข้อมูล</th>  <!-- กำหนดชื่อคอลัมน์เป็น 'จัดการข้อมูล' -->
+                            </tr>
+                        </thead>
+                        <tbody> <!-- tag สำหรับกำหนดข้อมูลในตาราง -->
+                            
+                        </tbody>
+                    </table>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('./template/footer'); -%>   <!-- เรียกใช้ไฟล์ footer -->
+<script>
+    var Feature = (function(){
+        Dropzone.autoDiscover = false;  // ปิดการค้นหาของ Dropzone แบบอัตโนมัติ
+
+        var has_image = 0;              // ตัวแปรกำหนดสถานะการเพิ่มรูปภาพ
+        var countOrder = 0;             // ตัวแปรในการสร้างลำดับข้อมูลในตาราง
+        var member_password = "";       // ตัวแปรในการเก็บรหัสผ่าน
+        var image_file = '';            // ตัวแปรในการเก็บชื่อไฟล์รูปภาพ
+
+        var aaRfid = "";                // ตัวแปรในการค้นหาข้อมูล RFID 
+        var aaSearch = "";              // ตัวแปรในการค้นหาข้อมูลในตาราง
+
+        var id_update = 0;              // ตัวแปรเก็บค่า id บุคลากรเพื่อกำหนดสถานะข้อมูล สำหรับ แก้ไข
+        var id_remove = 0;              // ตัวแปรเก็บค่า id บุคลากรเพื่อกำหนดสถานะข้อมูล สำหรับ ลบ
+
+        var user = JSON.parse('<%- JSON.stringify(udt) %>');
+            user = user.id;     // ช้อมูล id ของ User
+
+        var dataTable = $('#table_id').DataTable({
+            language: {emptyTable: "ไม่พบข้อมูลบุคลากร", info: "แสดงข้อมูลบุคลากร _TOTAL_ รายการ", infoEmpty: "ไม่พบข้อมูล"}, // กำหนดข้อความแสดงในตารางและจำนวนข้อมูลเมื่อ ' ไม่พบข้อมูลบุคลากร '
+            searching: false,   // ปิดฟอร์มค้นหาข้อมูลในตารางของ library
+            initComplete: function (settings, json) {   // กำหนดส่วนเสริมของตารางข้อมูล
+                $("#table_id").wrap("<div style='overflow:auto; width:100%; position:relative; max-height: 775px; margin-bottom: 5px;'></div> ");  // กำหนด style ของตารางข้อมูล (overflow:auto): ปรับไม่ให้เวลาย่อตารางข้อมูลแล้วตัวหนังสือตกบรรทัด, (width:100%): ปรับความกว่างเป็น 100%, (position:relative): ปรับการแสดงข้อมูลในตำแหน่งคงที่, (max-height): ปรับความยาวสูงสุดของตารางเป็น 708px (ปล.จะแสดงข้อมูล 1-10 แล้วที่เหลือจะเป็น scollBar แบบเลื่อนขึ้นลง), (margin-bottom): ปรับความสูงภายนอกด้างล่าง 5px:          
+            },
+            ordering: false,        // ปิดการจัดเรียงข้อมูล
+            lengthChange: false,    // ปิดการจำกัดจำนวนข้อมูล
+            paging: false,          // ปิดตัวแสดงลำดับหน้าของตาราง
+            bAutoWidth: false,      // ปิดการจัดเรียงความกว้างข้อมูล
+            columns:[               // ส่วนของการ loop นำข้อมูลมาใส่ในตาราง
+                        { 
+                            data: function (data) {
+                                countOrder++                        // เมื่อมีข้อมูล ตัวแปร countOrder จะมีค่าเพิ่มขึ้นทีละ 1
+                                return countOrder;                  // ข้อมูล ' ลำดับ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['rfid'];                // ข้อมูล ' รหัส RFID '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        
+                        { 
+                            data: function (data) {
+                                return data['username'];            // ข้อมูล ' รหัสพนักงาน '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['firstname'] + ' ' + data['lastname'];      // ข้อมูล ' ชื่อ '
+                            },  
+                            className : 'text-center',                                  // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                var gender = "";
+                                    gender = data['gender'];
+                                        if ( gender == 0 ) {
+                                            gender = "ชาย"
+                                        } 
+                                        else if ( gender == 1 ) {
+                                            gender = "หญิง"
+                                        }
+                                return gender;                      // ข้อมูล ' เพศ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['telephone'];           // ข้อมูล ' เบอร์โทรศัพท์ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                var setButton = ""
+                                    setButton = '<a class="btn btn-danger btn-sm shadow-sm" name="delete_data" data-id="' + data['id'] + '"><i class="fas fa-trash me-2"></i>ลบ</a>\
+                                                 <a class="btn btn-warning btn-sm shadow-sm" name="edit_data"\
+                                                    data-id="' + data['id'] + '" data-rfid="' + data['rfid'] + '" data-username="' + data['username'] + '"\
+                                                    data-firstname="' + data['firstname'] + '"data-lastname="' + data['lastname'] + '"data-gender="' + data['gender'] + '" data-telephone="' + data['telephone'] + '" data-image_file="' + data['image_file'] + '">\
+                                                 <i class="fas fa-pen me-2"></i>แก้ไข</a>'; 
+                                return setButton;                   // ปุ่ม ลบและแก้ไข
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                    ],
+            serverSide: true,   // เปิดการรับ - ส่งข้อมูลของตาราง
+            ajaxSource: '/regisMember/search',  // path สำหรับการรับ - ส่งข้อมูล (service)
+            serverData: function (sSource, aaData, fnCallback, oSettings) { // สร้าง function สำหรับการรับ - ส่งข้อมูล
+                aaData.push({ "name": "rfid", "value": aaRfid});    // กำหนดข้อมูล RFID ที่จะค้นหา
+                aaData.push({ "name": "search", "value": aaSearch});    // กำหนดข้อมูลที่จะค้นหา
+                oSettings.jqXHR = $.ajax({  // รับ - ส่งข้อมูลโดยใช้ ajax
+                    dataType: 'json',       // กำหนดรูปแบบข้อมูลเป็น json
+                    type: "POST",           // กำหนดประเภทการส่งแบบ POST
+                    url: sSource,           // path สำหรับการรับ - ส่งข้อมูล (ajaxSource)
+                    data: aaData,           // ข้อมูลที่ส่ง 
+                    success: function (response) {  // ถ้าติดต่อสำเร็จ
+                        if (response.status === "Succeed") {    // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'
+                            if (response.data === "No Reverting information") {  // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed' แต่ data เป็นคำว่า 'No Reverting information' คือไม่มีข้อมูลบุคลากร
+                                response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0};    // จัดเรียงข้อมูลที่ได้รับใหม่
+                            } else {
+                                var response = response.data;
+                                    response = {"aaData": response, "iTotalRecords": response.length, "iTotalDisplayRecords": response.length}; // จัดเรียงข้อมูลที่ได้รับใหม่
+                            }
+                        } else {
+                            response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0};    // จัดเรียงข้อมูลที่ได้รับใหม่
+                        }
+                      
+                        fnCallback(response);   // นำข้อมูลกลับขึ้นไป loop ใน columns
+
+                    }
+                });
+            },
+            createdRow: function (row, data, index) {   // ส่วนของการเขียน dom แต่ไม่ได้ใช้ (T-T)
+            }
+        });
+            
+        return {
+            
+            initDropzone: function () { //  function initDropzone : ใช้สำหรับเพิ่มไฟล์
+                dropzoneAdd = new Dropzone('[name=Member_image]', { // กำหนด element Member_image เป็นพื้นที่ dropzone
+                    url: function () {
+                        return '/regisMember/UploadImageProfile'; // path สำหรับการรับ - ส่งข้อมูลของไฟล์ (service)
+                        },
+                    paramName: "file",  // กำหนด Param ที่ส่ง
+                    maxFiles: 1,        // กำหนดจำนวนไฟล์สูงสุด 1 ไฟล์
+                    maxFilesize: 25,    // กำหนดขนาดไฟล์สูงสุด 25 mb
+                    addRemoveLinks: true,   // แสดงปุ่มยกเลิกการเพิ่ม
+                    paralleluploads: 1, // ส่งข้อมูลไฟล์ทีละ 1 ไฟล์ 
+                    acceptedFiles: ".jpg,.png,.gif,.jpeg,.jfif", // กำหนดประเภทของไฟล์ที่สามารถเพิ่มได้
+                    dictDefaultMessage: "", // กำหนดข้อความก่อนเพิ่มไฟล์
+                    init: function () {
+                        this.on("thumbnail", function (file, fileUrl) { // รูปภาพที่แสดง
+                            $('.dz-preview').last().find('img').attr({ width: '100%', height: '100%'}); // กำหนดให้ไฟล์รูปภาพให้มีขนาด กว้างและสูง 100%
+                        }),
+                           
+                        this.on("complete", function (file) { // เมื่ออัพโหลดสำเร็จ
+                            $(".dz-remove").html('<div class="btn btn-sm btn-danger shadow-sm w-100 mt-2"; style="border-radius: 15px;"><i class="fa fa-trash me-2"></i>ลบรูปภาพ</div>'); // กำหลดปุ่มลบไฟล์รูปภาพ เพิ่มเงา เพิ่มความกว้าง 100% ให้มีพื้นหลังสีแดง ขอบโค้ง 15px และ icon เป็นรูปถังขยะ
+                            //console.log(file)
+                        });
+                        this.on("processing", function (file) { // เมื่อกำลังอัพโหลด
+                            $('.dz-message').hide(); // ซ่อนข้อความของ Dropzone
+                        });  
+                        this.on("maxfilesexceeded", function(file){ // เมื่อกำลังอัพโหลดไฟล์เกินกำหนด
+                            this.removeFile(file);  // เรียกใช้ removeFile
+                            var _ref;
+                            var _this = $(this.element);
+                            _this.find('.dz-message').hide();   // ซ่อนข้อความของ Dropzone
+                                Swal.fire ({                                                        //
+                                    icon: 'warning',                                                //
+                                    title: 'คำเตือน',                                                // >> แสดงป้อปอัพ แจ้งเตือน
+                                    text: 'ไม่สามารถอับโหลดรูปมากกว่า 1 รูปได้ กรุณาลองใหม่อีกครั้ง',         //
+                                    confirmButtonText: "ยืนยัน",                                     //
+                                    
+                                }) .then((result) => {
+                                    if (result.isConfirmed) {
+                                        if (file.previewElement) {
+                                            if ((_ref = file.previewElement) != null) {
+                                            _ref.parentNode.removeChild(file.previewElement);   // ลบรูปภาพเก่าที่มีอยู่
+                                            _this.find('.dz-message').hide();   // ซ่อนข้อความของ Dropzone
+                                            // console.log(image_file);
+                                            }
+                                        }
+                                    } 
+                                });
+                            });
+                        },
+                        success: function (file, response) { // เมื่ออัพโหลดสำเร็จ
+                            var jsonResult = (response); // เก็บ response
+                            // console.log(jsonResult)
+                                if (jsonResult.fieldname == "file") {
+                                    file.previewElement.classList.add("dz-success");
+                                        image_file = jsonResult.filename;   // เก็บชื่อไฟล์รูปภาพ
+                                        has_image = 1;
+                                        // console.log(image_file);
+                                }
+                                else {
+                                    file.previewElement.classList.add("dz-error");
+                                }
+                            },                           
+                            error: function (file, response) {  // เมื่ออัพโหลดไม่สำเร็จ
+                        },
+                        removedfile: function (file) {  // เมื่อลบไฟล์
+                            var _ref;
+                            var _this = $(this.element);
+                                _this.find('.dz-message').hide();  // ซ่อนข้อความของ Dropzone
+                            Swal.fire ({                                                 //
+                                icon: 'warning',                                         //
+                                title: 'กรุณายืนยันการลบ',                                 //
+                                text: 'เมื่อกด "ยืนยัน" ระบบจะทำการลบรูปภาพบุคลากร',          //   >> แสดงป้อปอัพ แจ้งเตือน
+                                showCancelButton: true,                                 //
+                                confirmButtonText: "ยืนยัน",                              //
+                                cancelButtonText: "ยกเลิก",                              //
+                            }) .then((result) => {
+                            if (result.isConfirmed) {                                   // เมื่อกดปุ่ม 'ยืนยัน'
+                                if (file.previewElement) {
+                                    if ((_ref = file.previewElement) != null) {
+                                    _ref.parentNode.removeChild(file.previewElement);   // ลบรูปภาพเก่าที่มีอยู่
+                                    _this.find('.dz-message').show();                   // แสดงข้อความของ Dropzone
+                                    image_file = "";
+                                    // console.log(image_file);
+                                    }
+                                }
+                                Feature.submitRemoveImage();    // ทำงาน function submitRemoveImage
+                            } else {
+                                _this.addClass('dz-started');                           // เมื่อกดปุ่ม 'ยกเลิก'
+                                image_file = 1;                                         // คืนค่าสถานะ
+                            }
+                        });
+                    }
+                });        
+            },
+            searchData: function () {   // function searchData : สำหรับการค้นหาข้อมูล
+                $('#search').on('click', function (e) { // เมื่อกดปุ่ม element ที่มี id = search จะทำงาน (ปุ่มค้นหา)
+                    var MemberSearch = $('#MemberSearch').val();    // รับข้อมูลจากกล่องกรอกข้อความที่มี id= equipmentSearch มาเก็บไว้ในตัวแปร equipmentSearch
+                        aaSearch = MemberSearch.trim();             // กำหนดให้ตัวแปร aaSearch เก็บค่า ตัวแปร equipmentSearch และ (.trim) ทำการตัดคำว่างออก
+                        countOrder = 0;                             // กำหนดให้ตัวแปร countOrder เป็น 0 เพื่อจัดเรียงข้อมูลในตารางใหม่
+                        dataTable.ajax.reload();                    // สั่งให้ตารางข้อมูลทำการ รับ - ส่งข้อมูลใหม่อีกครั้ง
+                });
+            },
+            initButton: function () {   // function initInput : สำหรับการรับข้อมูลในฟอร์ม
+                // in dataTable
+                $('#table_id').on('click', '[name="edit_data"]', function () {  // ปุ่ม 'แก้ไข' ของข้อมูลบุคลากรในแถวตารางข้อมูล
+                    var data = $(this).data();  // รับข้อมูลจากปุ่มแก้ไข ที่กดในแถวตารางข้อมูล
+                        if ($('#MemberForm').is('.collapse:not(.show)')) {  // ถ้าฟอร์มของข้อมูลบุคลากรไม่ได้แสดง
+                            $('#MemberForm').collapse("toggle");            //แสดงฟอร์มข้อมูลบุคลากร
+                        }
+                            // set value
+                            id_update = data.id;                            // เก็บข้อมูล id ของข้อมูลบุคลากร
+                            $('#member_rfid').val(data.rfid);               // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลบุคลากร
+                            $('#member_firstname').val(data.firstname);     // นำข้อมูล response ของชื่อ มาใส่ในฟอร์ม 'ชื่อ' ข้อมูลบุคลากร
+                            $('#member_lastname').val( data.lastname);      // นำข้อมูล response ของนามสกุล มาใส่ในฟอร์ม 'นามสกุล' ข้อมูลบุคลากร
+                            $('#member_username').val(data.username);       // นำข้อมูล response ของรหัสพนักงานมาใส่ในฟอร์ม 'รหัสพนักงาน' ข้อมูลบุคลากร
+                            $("#member_password").val('');                  // นำข้อมูล response ของรหัสผ่าน มาใส่ในฟอร์ม 'รหัสผ่าน' ข้อมูลบุคลากร
+                            $('#member_gender').val(data.gender);           // นำข้อมูล response ของเพศ มาใส่ในฟอร์ม 'เพศ' ข้อมูลบุคลากร
+                            $('#member_tel').val(data.telephone);           // นำข้อมูล response ของเบอร์โทรศัพท์ มาใส่ในฟอร์ม 'เบอร์โทรศัพท์' ข้อมูลบุคลากร
+                            $('.dz-preview').remove();                      // ลบ Class : dz-preview 
+                            image_file = data.image_file;                   // เก็บชื่อไฟล์รูปภาพ
+
+                            if (data.image_file != ""){
+                                var mockFile = {id: data.rfid, name: 'member.jpg', size: 102400 };
+                                    dropzoneAdd.emit('addedfile', mockFile);
+                                    var file_url = 'http://157.230.254.198:3000/profiles/' + data.image_file;   // path ของไฟล์รูปภาพที่นำมาแสดง
+
+                                        dropzoneAdd.emit('thumbnail', mockFile, file_url);  // กำหนดรูปภาพที่แสดง
+                                        dropzoneAdd.emit('complete', mockFile); // กำหนดให้สถานนะเป็นอัพโหลดสำเร็จ
+                                        dropzoneAdd.files.push(mockFile); // เพิ่มไฟล์ใน Dropzone
+                                        
+                                        var _this = $(this.element);
+                                            _this.find('.dz-message').addClass('hidden');   // ซ่อนข้อความของ Dropzone
+
+                                        image_file = data.image_file;   // กำหนดไฟล์รูปภาพ     
+                            }
+                });
+                $('#table_id').on('click', '[name="delete_data"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลบุคลากรในแถวตารางข้อมูล
+                    var data = $(this).data();  // รับข้อมูลจากปุ่มแก้ไข ที่กดในแถวตารางข้อมูล
+                        id_remove = data.id;    // เก็บข้อมูล id ของข้อมูลบุคลากร                                     
+                        Swal.fire ({                                                     //
+                                icon: 'warning',                                         //
+                                title: 'กรุณายืนยันการลบ',                                 //
+                                text: 'เมื่อกด "ยืนยัน" ระบบจะทำการลบข้อมูลบุคลากร',           //   >> แสดงป้อปอัพ แจ้งเตือน
+                                showCancelButton: true,                                  //
+                                confirmButtonText: "ยืนยัน",                              //
+                                cancelButtonText: "ยกเลิก",                               //
+                            }) .then((result) => {
+                            if (result.isConfirmed) {                           // เมื่อกดปุ่ม ยืนยัน
+                                Feature.submitRemoveMember();                   // ทำงาน function submitRemoveMember
+                            } else {                                            // เมื่อกดปุ่ม ยกเลิก
+                                swal.close()                                    // ปิดป้อปอัพ
+                            }
+                        });
+                });
+                // add new Member
+                $('#add_NewMember').on('click', function (e) {  // ปุ่ม 'เพิ่มข้อมูลบุคลากร'
+                    if ($('#MemberForm').is('.collapse:not(.show)')) { // ถ้าฟอร์มของข้อมูลบุคลากรไม่ได้แสดง
+                            $('#MemberForm').collapse("toggle");
+                    }
+                        id_update = 0;                                              // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                        image_file = "";                                            // กำหนด 'ไฟล์รูปภาพ' ว่าง
+                        $('.dz-message').show();                                    // แสดงข้อความของ Dropzone
+                        
+                        // $('.dz-preview').remove(); 
+                        $('.dz-complete').remove();                                 // ซ่อนสถานะการทำงานที่อัพโหลดสำเร็จ Dropzone
+                        $('.dz-image-preview').remove();                            // ซ่อนรูปภาพที่แสดง
+                        // clear value
+                        $('#member_rfid').val('');                                  // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                        $('#member_firstname').val('');                             // ทำให้ฟอร์ม 'ชื่อ' ว่าง
+                        $('#member_lastname').val('');                              // ทำให้ฟอร์ม 'นามสกุล' ว่าง
+                        $('#member_username').val('');                              // ทำให้ฟอร์ม 'รหัสพนักงาน' ว่าง
+                        $("#member_password").val('');                              // ทำให้ฟอร์ม 'รหัสผ่าน' ว่าง
+                        // $("#member_password").prop( "disabled", false );
+                        $('#member_gender').val('');                                // ทำให้ฟอร์ม 'เพศ' ว่าง
+                        $('#member_tel').val('');                                   // ทำให้ฟอร์ม 'เบอร์โทรศัพท์' ว่าง
+                });
+                // in form 
+                $('#submit_addMember').on('click', function (e) {   // ปุ่ม 'บันทึก'
+                    const now = new Date();                                                                     //
+                    const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                    const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                    const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                        dateNow = str;                                                                          //
+                       
+
+                        if (id_update == 0) {   // ถ้า id = 0 กำหนดเป็นการเพิ่มข้อมูลบุคลากร
+                            if ($('#member_rfid').val() != "" && $('#member_fristname').val() != "" && $('#member_lastname').val() != "" && $('#member_username').val() != "" && $('#member_password').val() != "" && $('#member_gender').val() != "" && $('#member_tel').val()!= "" ) {    // ตรวจสอบข้อมูลในฟอร์มของข้อมูลบุคลากร ต้องไม่ว่าง
+                                if (image_file != "") { // ตรวจสอบการเพิ่มรูปภาพ
+                                    member_password = $('#member_password').val(); // กำหนดรหัสผ่าน
+                                    Feature.submitAddMember();  // ทำงาน function submitAddMember
+                                } else {
+                                    Swal.fire({                                                         //
+                                        title: "กรุณาเพิ่มรูปภาพ",                                          //
+                                        text: "ไม่สามารถบันทึกได้กรุณาเพิ่มรูปภาพบุคลากร แล้วลองอีกครั้ง",          // >> แสดงป้อปอัพ แจ้งเตือน
+                                        icon: "warning",                                                //
+                                        confirmButtonText: "ตกลง",                                      //
+                                    });
+                                }
+                            } else {    // ถ้าฟอร์มกรอกข้อมูล ว่าง  
+                                $("#Member_validate").addClass("was-validated");    // เพิ่ม Class : was-validated ใน Class :Member_validate
+                            }
+                        } 
+                        else if (id_update > 0) {   // ถ้า id ไม่เป็น 0 กำหนดเป็นการแก้ไขข้อมูลบุคลากร
+                            if ($('#member_rfid').val()  != "" && $('#member_fristname').val() != "" && $('#member_lastname').val() != "" && $('#member_username').val() != "" && $('#member_gender').val() != "" && $('#member_tel').val() != "") {    // ตรวจสอบข้อมูลในฟอร์มของข้อมูลบุคลากร ต้องไม่ว่าง
+                                if (image_file != "") {  // ตรวจสอบการเพิ่มรูปภาพ
+                                    member_password = "";   // กำหนดรหัสผ่าน
+                                    Feature.submitUpdateMember();  // ทำงาน function submitUpdateMember
+                                } else {
+                                    Swal.fire({                                                         //
+                                        title: "กรุณาเพิ่มรูปภาพ",                                          //
+                                        text: "ไม่สามารถบันทึกได้กรุณาเพิ่มรูปภาพบุคลากร แล้วลองอีกครั้ง",          // >> แสดงป้อปอัพ แจ้งเตือน
+                                        icon: "warning",                                                //
+                                        confirmButtonText: "ตกลง",                                      //
+                                    });
+                                }
+                            } else {    // ถ้าฟอร์มกรอกข้อมูล ว่าง  
+                                $("#Member_validate").addClass("was-validated");    // เพิ่ม Class : was-validated ใน Class :Member_validate
+                            }
+                        }
+                    
+                    
+                });
+                $('#cancel_addMember').on('click', function (e) {   // ปุ่ม 'ยกเลิก'               
+                    if ($('#MemberForm').is('.collapse.show')) {    // ถ้าฟอร์มของข้อมูลบุคลากรแสดง
+                            $("#Member_validate").removeClass("was-validated"); // ลบ Class : was-validated ใน Class :Member_validate
+                            $('#MemberForm').collapse("toggle");    // ซ่อนฟอร์มข้อมูลบุคลากร
+                    }
+                        // clear value
+                        $('#member_rfid').val('');                  // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                        $('#member_firstname').val('');             // ทำให้ฟอร์ม 'ชื่อ' ว่าง
+                        $('#member_lastname').val('');              // ทำให้ฟอร์ม 'นามสกุล' ว่าง
+                        $('#member_username').val('');              // ทำให้ฟอร์ม 'รหัสพนักงาน' ว่าง
+                        $('#member_gender').val('');                // ทำให้ฟอร์ม 'เพศ' ว่าง
+                        $('#member_tel').val('');                   // ทำให้ฟอร์ม 'เบอร์โทรศัพท์' ว่าง
+
+                    });
+                $('#clear_rfid').on('click', function (e) {     // ปุ่ม 'เคลียร์ Tag'
+                    $('#member_rfid').val('');  // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                });
+            },
+            submitAddMember: function () {  // function submitAddMember : สำหรับการส่งข้อมูลเพื่อเพิ่มข้อมูลบุคลากร
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;                                                                          //
+                
+                var url = '/regisMember/PostRegisterMember';        // path ส่งข้อมูล 'บันทึกข้อมูลบุคลากร' (service)
+                    $.ajax({                                        // รับ - ส่งข้อมูลโดยใช้ ajax
+                        type: 'POST',                               // กำหนดประเภทการส่งแบบ POST
+                        url: url,                                   // path ส่งข้อมูล 'บันทึกข้อมูลบุคลากร' (service)
+                        data: { 
+                                    rfid : $('#member_rfid').val(),                 // ข้อมูล รหัส RFID ของบุคลากร
+                                    username : $('#member_username').val(),         // ข้อมูล รหัสพนักงาน ของบุคลากร
+                                    password : member_password,                     // ข้อมูล รหัสผ่าน ของบุคลากร
+                                    firstname : $('#member_firstname').val(),       // ข้อมูล ชื่อ ของบุคลากร
+                                    lastname : $('#member_lastname').val(),         // ข้อมูล นามสกุล ของบุคลากร
+                                    gender : $('#member_gender').val(),             // ข้อมูล เพศ ของบุคลากร
+                                    telephone : $('#member_tel').val(),             // ข้อมูล เบอร์โทรศัพท์ ของบุคลากร
+                                    datetime : dateNow,                             // ข้อมูล วันที่และเวลา ปัจจุบัน ของบุคลากร
+                                    create_by : user,                               // ช้อมูล id ของ User
+                                  } 
+                        })
+                    .done(function(response) {  // ถ้าติดต่อสำเร็จ
+                        if (response.status == "Succeed") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                            if (has_image == 1) { // ถ้ามีการอัพโหลดไฟล์
+                                Feature.submitSendImage();  // ทำงาน function submitSendImage
+                            } else {    
+                                Swal.fire({                                     // 
+                                    title: "สำเร็จ",                              //
+                                    text: "บันทึกการแก้ไขข้อมูลบุคลากรสำเร็จ ",        // >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "success",                            //
+                                    confirmButtonText: "ตกลง",                  //
+                                }).then((result) => {                           
+                                    if (result.isConfirmed) {                   //  เมื่อกดปุ่ม ตกลง
+                                        window.location.reload();               //  รีโหลดหน้าเว็บไซต์
+                                    }
+                                });    
+                            }
+                        } else if (response.status == "Failed") {   // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed'  
+                            if (response.data.DuplicateData == "rfid" ){
+                                Swal.fire({                                                 //
+                                    title: "ผิดพลาด",                                       //
+                                    text: "ไม่สามารถบันทึกได้ เนื่องจากมีรหัส RFID นี้แล้วในระบบ ",   //   >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "error",                                         //
+                                    confirmButtonText: "ตกลง",                             //
+                                });
+                            }
+                            else if (response.data.DuplicateData == "username" ){
+                                Swal.fire({                                                     //
+                                    title: "ผิดพลาด",                                           //
+                                    text: "ไม่สามารถบันทึกได้ เนื่องจากมี 'รหัสพนักงาน' นี้แล้วในระบบ ",   //   >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "error",                                              //
+                                    confirmButtonText: "ตกลง",                                  //
+                                });
+                            }
+                            else {
+                                Swal.fire({                                                             //
+                                    title: "ผิดพลาด",                                                   //
+                                    text: "ไม่สามารถบันทึกได้ ข้อผิดพลาดจากระบบ : " + response.data,         //   >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "error",                                                      //
+                                    confirmButtonText: "ตกลง",                                          //
+                                });
+                            }
+                        }
+                    });
+            },
+            submitUpdateMember: function () {   // function submitUpdateMember : สำหรับการส่งข้อมูลเพื่อแก้ไขข้อมูลบุคลากร
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;                                                                          //
+
+                var url = '/regisMember/PostEditMember';        // path ส่งข้อมูล 'บันทึกข้อมูลบุคลากร' (service)
+                    $.ajax({                                    // รับ - ส่งข้อมูลโดยใช้ ajax
+                        type: 'POST',                           // กำหนดประเภทการส่งแบบ POST
+                            url: url,                           // path ส่งข้อมูล 'บันทึกข้อมูลบุคลากร' (service)
+                            data: { 
+                                    id : id_update,                                 // ช้อมูล id ของบุคลากร
+                                    rfid : $('#member_rfid').val(),                 // ข้อมูล รหัส RFID ของบุคลากร
+                                    username : $('#member_username').val(),         // ข้อมูล รหัสพนักงาน ของบุคลากร
+                                    password : $('#member_password').val(),         // ข้อมูล รหัสผ่าน ของบุคลากร
+                                    firstname : $('#member_firstname').val(),       // ข้อมูล ชื่อ ของบุคลากร
+                                    lastname : $('#member_lastname').val(),         // ข้อมูล นามสกุล ของบุคลากร
+                                    gender : $('#member_gender').val(),             // ข้อมูล เพศ ของบุคลากร
+                                    telephone : $('#member_tel').val(),             // ข้อมูล เบอร์โทรศัพท์ ของบุคลากร
+                                    datetime : dateNow,                             // ข้อมูล วันที่และเวลา ปัจจุบัน ของบุคลากร
+                                    update_by : user,                               // ช้อมูล id ของ User
+                                  } 
+                        })
+                    .done(function(response) {  // ถ้าติดต่อสำเร็จ
+                        if (response.status == "Succeed") { // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'
+                            if (has_image == 1) {   // ถ้ามีการอัพโหลดไฟล์
+                                Feature.submitSendImage();  // ทำงาน function submitSendImage
+                            } else {
+                                Swal.fire({                                         //
+                                    title: "สำเร็จ",                                  //
+                                    text: "บันทึกการแก้ไขข้อมูลบุคลากรสำเร็จ ",            //   >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "success",                                //
+                                    confirmButtonText: "ตกลง",                      //
+                                }).then((result) => {
+                                    if (result.isConfirmed) {                       //  เมื่อกดปุ่ม ตกลง
+                                        window.location.reload();                   //  รีโหลดหน้าเว็บไซต์
+                                    }
+                                });    
+                            }
+                        } else if (response.status == "Failed") {    // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed' 
+                            // console.log(response);
+                            if (response.data.DuplicateData == "rfid") {                        
+                                Swal.fire({                                                         //
+                                    title: "ผิดพลาด",                                               //
+                                    text: "มีรหัส RFID ของบุคลากรนี้ในระบบแล้ว กรุณาลองใหม่อีกครั้ง ",        //   >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "error",                                                  //
+                                    confirmButtonText: "ตกลง",                                      //
+                                });
+                            } 
+                            else if (response.DuplicateData == "username" ){
+                                Swal.fire({                                                                 //
+                                    title: "ผิดพลาด",                                                       //
+                                    text: "ไม่สามารถบันทึกได้ เนื่องจากมี 'รหัสพนักงาน' นี้แล้วในระบบ ",               //   >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "error",                                                          //
+                                    confirmButtonText: "ตกลง",                                              //
+                                });
+                            }
+                            else {
+                                Swal.fire({                                                                           //
+                                    title: "ผิดพลาด",                                                                 //
+                                    text: "ไม่สามารถบันทึกได้ ข้อผิดพลาดจากระบบ : " + response.data,                      //  >> แสดงป้อปอัพ แจ้งเตือน
+                                    icon: "error",                                                                   //
+                                    confirmButtonText: "ตกลง",                                                       //
+                                });
+                            }
+                        } 
+                    });
+            },
+            submitRemoveMember: function () {   // function submitRemoveMember : สำหรับการส่งข้อมูลเพื่อลบข้อมูลบุคลากร
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;                                                                          //
+
+                var url = '/regisMember/PostDeleteMember';  // path ส่งข้อมูล 'บันทึกข้อมูลบุคลากร' (service)
+                    $.ajax({                                // รับ - ส่งข้อมูลโดยใช้ ajax
+                        type: 'POST',                       // กำหนดประเภทการส่งแบบ POST
+                            url: url,                       // path ส่งข้อมูล 'บันทึกข้อมูลบุคลากร' (service)
+                            data: { 
+                                    id : id_remove,         // ช้อมูล id ของ ของบุคลากร
+                                    datetime : dateNow      // ข้อมูล วันที่และเวลา ปัจจุบัน ของบุคลากร
+                                  } 
+                        })
+                    .done(function(response) {
+                        if (response.status == "Succeed") { // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed' 
+                            Swal.fire({                                     //
+                                title: "สำเร็จ",                              //
+                                text: "บันทึกข้อมูลการลบข้อมูลบุคลากรสำเร็จ",      //    >> แสดงป้อปอัพ แจ้งเตือน
+                                icon: "success",                            //
+                                confirmButtonText: "ตกลง",                  //
+                            }).then((result) => {
+                                if (result.isConfirmed) {                   //  เมื่อกดปุ่ม ตกลง
+                                    window.location.reload();               //  รีโหลดหน้าเว็บไซต์
+                                }
+                            });
+                            
+                        } else if (response.status == "Failed") {   // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed' 
+                            Swal.fire({                                                          //
+                                title: "ผิดพลาด",                                                //
+                                text: "ไม่สามารถบันทึกการลบข้อมูลบุคลากรได้ กรุณาลองใหม่อีกครั้ง ",        //   >> แสดงป้อปอัพ แจ้งเตือน
+                                icon: "error",                                                  //
+                                confirmButtonText: "ตกลง",                                      //
+                            });
+                        }
+                    });
+            },
+            // Dropzone 
+            submitSendImage: function () {  // function submitSendImage : สำหรับการส่งข้อมูลเพื่อเพิ่มไฟล์
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                dateNow = str;  
+                var url = '/regisMember/UploadImageProfile?post=true';  // path ส่งข้อมูล 'บันทึกข้อมูลไฟล์' (service)
+                    $.ajax({                // รับ - ส่งข้อมูลโดยใช้ ajax
+                        type: 'POST',       // กำหนดประเภทการส่งแบบ POST
+                        url: url,           // path ส่งข้อมูล 'บันทึกข้อมูลไฟล์' (service)
+                        data: { 
+                                filename : image_file,                  // ช้อมูล ชื่อไฟล์
+                                rfid : $('#member_rfid').val(),         // ข้อมูล รหัส RFID ของบุคลากร
+                                datetime : dateNow, 
+                            } 
+                    }) .done(function(response) {
+                        Swal.fire({                                     //
+                            title: "สำเร็จ",                              //
+                            text: "บันทึกการเพิ่มข้อมูลบุคลากรสำเร็จ ",         //   >> แสดงป้อปอัพ แจ้งเตือน
+                            icon: "success",                            //
+                            confirmButtonText: "ตกลง",                  //
+                        }).then((result) => {
+                            if (result.isConfirmed) {                   //  เมื่อกดปุ่ม ตกลง
+                                window.location.reload();               //  รีโหลดหน้าเว็บไซต์
+                            }
+                        });
+                    });
+            },
+            submitRemoveImage: function () {    // function submitRemoveImage : สำหรับการส่งข้อมูลเพื่อลบไฟล์
+                var url = '/regisMember/UploadImageProfile?clrimage='+ image_file;  // path ส่งข้อมูล 'บันทึกข้อมูลไฟล์' (service)
+                    image_file = "";        // กำหนดชื่อไฟล์
+                    $.ajax({                // รับ - ส่งข้อมูลโดยใช้ ajax
+                            type: 'POST',   // กำหนดประเภทการส่งแบบ POST
+                            url: url,       // path ส่งข้อมูล 'บันทึกข้อมูลไฟล์' (service)
+                        })
+            },
+            init: function () {     // function init : เป็น function ที่รวม function ที่ต้องการเรียกใช้งานเมื่อเริ่มเว็บไซต์
+                Feature.initDropzone();     // สำหรับการเพิ่มไฟล์
+                Feature.searchData();       // สำหรับการค้นหาข้อมูล
+                Feature.initButton();       // สำหรับการทำงานของปุ่ม
+            }
+        }
+    })();
+  
+    jQuery(document).ready(function () {
+      Feature.init();   // เรียกใช้ function เมื่อเริ่มเว็บไซต์
+      
+    });  
+</script>

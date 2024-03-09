@@ -1,0 +1,271 @@
+<%- include('./template/header'); -%>
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-lg-10">
+
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-sm ">
+                    <div class="card-head">
+                        <div class="text-center">
+                            <br>
+                            <br>
+                            <h3>แจ้งเตือนการยืมอุปกรณ์</h3>
+                        </div>
+
+                    </div>
+                    <div class="card-body ">
+                        <table class="display nowrap" id="table_id">
+                            <!-- หัวตาราง -->
+                            <thead class="table-navy-blue ">
+
+                                <tr>
+                                    <th class="text-center ">วัน/เดือน/ปี</th>
+                                    <th class="text-center ">รหัสพนักงาน</th>
+                                    <th class="text-center ">ชื่อ-นามสกุล</th>
+                                    <th class="text-center ">รายการยืม</th>
+                                    <th class="text-center ">เลขครุภัณฑ์</th>
+                                    <th class="text-center ">เวลา</th>
+                                    <th class="text-center ">ตำแหน่ง</th>
+                                    <th class="text-center ">สถานะ</th>
+                                    <th class="text-center ">รับทราบ</th>
+                                </tr>
+                            </thead>
+                            <!-- สิ้นสุดหัวตาราง -->
+
+                            <!-- เนื้อหาตาราง -->
+                            <tbody>
+
+                            </tbody>
+                            <!-- สิ้นสุดเนื้อหาตาราง -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./template/footer'); -%>
+
+        <script>
+            var Feature = (function() {
+                //รับค่าวันเริ่มต้น
+                var startDate = $('#start_date').datepicker();
+                //รับค่าวันที่สิ้นสุด
+                var endDate = $('#end_date').datepicker();
+                //เริ่มต้นการเอาข้อมูลใส่ลเนื้อหาตาราง
+                var dataTable = $('#table_id').DataTable({
+                    language: {
+                        emptyTable: "ไม่พบการแจ้งเตือน",
+                        info: "แสดงการแจ้งเตือน _TOTAL_ รายการ",
+                        infoEmpty: "ไม่พบข้อมูล"
+                    },
+
+                    searching: false,
+                    responsive: true,
+                    initComplete: function(settings, json) {
+                        $("#table_id").wrap("<div style='overflow:auto; width:100%; position:relative; max-height: 708px; background-color: #F9F9F9; margin-bottom: 5px;'></div> ");
+                    },
+                    ordering: false,
+                    lengthChange: false,
+                    paging: false,
+                    // iDisplayLength: 10,
+                    bAutoWidth: false,
+                    columns: [{
+                            //แสดงวันเดือนปี
+                            data: function(data) {
+                                var date = ""
+                                date = (data['borrow_date']).split("T")[0];
+                                var time = new Date(date);
+                                var year = time.getFullYear() + 543;
+                                return time.getDate().toLocaleString() + "/" + (parseInt(time.getMonth()) + 1) + "/" + year;
+                                // console.log(str);
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงชื่อผู้ใช้
+                        {
+                            data: function(data) {
+                                return data['username'];
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงชื่อนามสกุล
+                        {
+                            data: function(data) {
+                                return data['firstname'] + " " + data['lastname'];
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงชื่ออุปกรณ์
+                        {
+                            data: function(data) {
+                                return data['equipment_name'];
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงเลขอุปกรณ์
+                        {
+                            data: function(data) {
+                                return data['equipment_number'];
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงเวลา
+                        {
+                            data: function(data) {
+                                var date_data = data['borrow_date'];
+                                var time = new Date(date_data)
+                                time.setHours(time.getHours() - 7);
+                                var date_string = time;
+                                return date_string.toLocaleTimeString('th', {
+                                    timeStyle: 'short',
+                                    hour12: false,
+                                }) + " " + "น.";
+                                // console.log(str);
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงชื่อแผนก
+                        {
+                            data: function(data) {
+                                return data['department_name'];
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงสถานะการยืมคืน
+                        {
+                            data: function(data) {
+                                if (data['status'] == "0") {
+                                    return "กำลังยืม";
+                                } else {
+                                    return "คืนแล้ว";
+                                }
+
+                            },
+                            className: 'text-center',
+                        },
+                        //แสดงปุ่มยอมรับ
+                        {
+                            data: function(data) {
+                                var setButton = ""
+                                setButton = '<div class="btn btn-success" id="accept" name="accept" data-id="' + data['report_id'] + '" > <i class = "fas fa-check me-2 "> </i>รับทราบ</div > ';
+                                return setButton;
+                            },
+                            className: 'text-center',
+                        },
+                    ],
+                    serverSide: true,
+                    ajaxSource: '/notification/search',
+                    serverData: function(sSource, aaData, fnCallback, oSettings) {
+                        // aaData.push({
+                        //     "name": "reportID",
+                        //     "value": ""
+                        // });
+
+                        oSettings.jqXHR = $.ajax({
+                            dataType: 'json',
+                            type: "POST",
+                            url: sSource,
+                            data: aaData,
+                            success: function(response) {
+                                // console.log(response);
+                                // console.log(response);
+                                // var response = response.data;
+                                if (response.status === "Succeed") {
+                                    if (response.data === "No notification information") {
+                                        // console.log("no data");
+                                        response = {
+                                            "aaData": [],
+                                            "iTotalRecords": 0,
+                                            "iTotalDisplayRecords": 0
+                                        };
+                                    } else {
+                                        var response = response.data;
+                                        // console.log("have data");
+                                        response = {
+                                            "aaData": response,
+                                            "iTotalRecords": response.length,
+                                            "iTotalDisplayRecords": response.length
+                                        };
+                                    }
+                                } else {
+
+                                    response = {
+                                        "aaData": [],
+                                        "iTotalRecords": 0,
+                                        "iTotalDisplayRecords": 0
+                                    };
+
+                                }
+                                // console.log(response);
+                                fnCallback(response);
+
+                            }
+                        });
+                    },
+                    createdRow: function(row, data, index) {}
+                });
+
+                return {
+                    initButton: function() {
+                        //function การทำงานของปุ่มยอมรับ
+                        $('#table_id').on('click', '[name="accept"]', function() {
+                            var data = $(this).data();
+                            report_id = data.id;
+                            Feature.submitNotification();
+                        });
+
+                    },
+
+
+
+                    submitNotification: function() {
+                        var url = '/notification/PostReadNotify';
+                        //การส่งผ่าน update การยอมรับการแจ้งเตือน
+                        $.ajax({
+                                type: 'POST',
+                                url: url,
+                                data: {
+                                    reportID: report_id
+                                }
+                            })
+                            .done(function(response) {
+                                if (response.status == "Succeed") {
+                                    //alert แสดงการยอมรับ
+                                    Swal.fire({
+                                        title: "สำเร็จ",
+                                        text: "รับทราบข้อมูลสำเร็จ",
+                                        icon: "success",
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.reload();
+                                        }
+                                    });
+
+                                } else if (response.status == "Failed") {
+                                    //alert แสดงการยอมรับผิดพลาด
+                                    Swal.fire({
+                                        title: "ผิดพลาด",
+                                        icon: "error",
+                                    });
+                                }
+                            });
+                    },
+
+
+                    init: function() {
+                        Feature.initButton();
+                        // Feature.initComplete();
+
+                    }
+                }
+            })();
+
+            jQuery(document).ready(function() {
+                Feature.init();
+            });
+        </script>

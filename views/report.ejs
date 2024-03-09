@@ -1,0 +1,291 @@
+<%- include('./template/header'); -%>
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-lg-4">
+
+            </div>
+            <div class="col-lg-8">
+                <div class="col-lg-12">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body pb-0">
+                            <div class="row">
+
+                                <div class="col-xl-9 mb-3">
+                                    <!-- select ค้นหารายการยืมคืน -->
+                                    <div class="input-group rounded">
+                                        <select class="form-select me-2 rounded" aria-label=".form-select-sm example" name="typeSearch" id="typeSearch">
+                                        <option selected value="0">เลือกรายการ...</option>
+                                        <option value="1">รายการทั้งหมด</option>
+                                        <option value="2">รายการยืม</option>
+                                        <option value="3">รายการคืน</option>
+                                    <!-- การค้นหาด้วยวันที่ -->
+                                    </select>
+                                        <input type="datetime" id="start_date" class="form-control rounded" placeholder="เริ่มต้น" aria-label="start-date">
+                                        <span class="input-group-text ">ถึง</span>
+                                        <input type="datetime " id="end_date" class="form-control rounded" placeholder="สิ้นสุด" aria-label="end-date">
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-3 mb-3 text-end">
+                                    <div class="btn btn-outline-secondary " id="clear"><i class="fas fa-times me-2 "></i>ยกเลิก</div>
+                                    <div class="btn btn-success " id="search"><i class="fas fa-search me-2 "></i>ค้นหา</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-lg-12 ">
+                <div class="card shadow-sm ">
+                    <div class="card-body ">
+                        <table class="display nowrap" id="table_id">
+                            <!-- เริ่มส่วนหัวตาราง -->
+                            <thead class="table-navy-blue ">
+                                <tr>
+                                    <th class="text-center ">วัน/เดือน/ปี</th>
+                                    <th class="text-center ">รหัสพนักงาน</th>
+                                    <th class="text-center ">ชื่อ-นามสกุล</th>
+                                    <th class="text-center ">รายการ</th>
+                                    <th class="text-center ">เลขครุภัณฑ์</th>
+                                    <th class="text-center ">เวลา</th>
+                                    <th class="text-center ">ตำแหน่ง</th>
+                                    <!-- <th class="text-center ">แจ้งเตือน</th> -->
+                                    <th class="text-center ">สถานะ</th>
+                                </tr>
+                            </thead>
+                            <!-- สิ้นสุดส่วนหัวตาราง -->
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('./template/footer'); -%>
+
+        <script>
+            var Feature = (function() {
+                //การจัด fomat วันที่เป็น dd/mm/yyyy
+                var startDate = $('#start_date').datepicker({
+                    format: 'dd/mm/yyyy',
+                    // formatDate: 'mm/dd/yyyy'
+                });
+                var endDate = $('#end_date').datepicker({
+                    format: 'dd/mm/yyyy',
+                    // formatDate: 'mm/dd/yyyy'
+                });
+                //สิ้วนสุดการจัด fomat วัน
+                var type_search = "0";
+                var start_data = "";
+                var end_data = "";
+                // console.log(end_data);
+
+                var dataTable = $('#table_id').DataTable({
+                    language: {
+                        emptyTable: "ไม่พบรายงานรายการยืมคืน",
+                        info: "แสดงรายการยืมคืน _TOTAL_ รายการ",
+                        infoEmpty: "ไม่พบข้อมูล"
+                    },
+                    searching: false,
+                    responsive: true,
+                    initComplete: function(settings, json) {
+
+                        $("#table_id").wrap("<div style='overflow:auto; width:100%; position:relative; max-height: 708px; background-color: #F9F9F9; margin-bottom: 5px;'></div> ");
+
+                    },
+                    ordering: false,
+                    lengthChange: false,
+                    paging: false,
+                    // iDisplayLength: 10,
+                    bAutoWidth: false,
+                    columns: [{
+                        //การเเสดงวันที่ลงตาราง
+                        data: function(data) {
+
+                            var date = ""
+                            date = (data['update_at']).split("T")[0];
+                            var time = new Date(date);
+                            var year = time.getFullYear() + 543;
+                            return time.getDate().toLocaleString() + "/" + (parseInt(time.getMonth()) + 1) + "/" + year;
+                            // console.log(str);
+
+                        },
+                        className: '',
+                    }, {
+                        //การแสดงชื่อผู้ใช้ในตาราง
+                        data: function(data) {
+                            return data['username'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //ารแสดงชื่อนามสกุลลงตาราง
+                        data: function(data) {
+                            return data['firstname'] + '  ' + data['lastname'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดงชื่ออุผกรณ์ลงตาราง
+                        data: function(data) {
+                            return data['equipment_name'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //การแสดงเลขครุลงตาราง
+                        data: function(data) {
+                            return data['equipment_number'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //การแสดงเวลาลงตาราง
+                        data: function(data) {
+                            var date_data = data['update_at'];
+
+                            var time = new Date(date_data)
+                            time.setHours(time.getHours() - 7);
+                            var date_string = time;
+                            return date_string.toLocaleTimeString('th', {
+                                timeStyle: 'short',
+                                hour12: false,
+                            }) + " " + "น.";
+                            // console.log(str);
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดงชื่อแผนกลงตาราง
+                        data: function(data) {
+                            return data['department_name'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดงสถานะการยืมคืนลงตาราง
+                        data: function(data) {
+                            if (data['status'] == "1") {
+                                return "คืนเเล้ว";
+                            } else if (data['status'] == "0") {
+                                return "กำลังยืม";
+                            }
+                            return data['status'];
+                        },
+                        className: 'text-center',
+                    }],
+                    serverSide: true,
+                    ajaxSource: '/report/search',
+                    serverData: function(sSource, aaData, fnCallback, oSettings) {
+                        aaData.push({
+                            //การส่งสถานะการยืมคืนไปค้นหาข้อมูลออกมา
+                            "name": "typeSearch",
+                            "value": type_search
+                        });
+                        aaData.push({
+                            //การส่งวันที่เริ่มต้นไปค้นหา
+                            "name": "firstDate",
+                            "value": start_data
+                        });
+                        aaData.push({
+                            //การส่งวันที่สิ้นสุดไปค้นหา
+                            "name": "untilDate",
+                            "value": end_data
+                        });
+                        oSettings.jqXHR = $.ajax({
+                            dataType: 'json',
+                            type: "POST",
+                            url: sSource,
+                            data: aaData,
+                            success: function(response) {
+                                // console.log(response);
+                                if (response.status === "Succeed") {
+                                    var response = response.data;
+                                    response = {
+                                        "aaData": response,
+                                        "iTotalRecords": response.length,
+                                        "iTotalDisplayRecords": response.length
+                                    };
+                                } else {
+
+                                    response = {
+                                        "aaData": [],
+                                        "iTotalRecords": 0,
+                                        "iTotalDisplayRecords": 0
+                                    };
+
+                                }
+                                fnCallback(response);
+
+                            }
+                        });
+                    },
+                    createdRow: function(row, data, index) {}
+                });
+
+                return {
+                    searchData: function() {
+                        //function ตรวจสอบข้อมูลก่อนค้นหา
+                        $('#search').on('click', function(e) {
+                            var select_search = $('#typeSearch').val();
+                            // console.log(select_search);
+                            var startData = $('#start_date').val();
+                            var dateStart = startData.split("/");
+
+
+                            var endData = $('#end_date').val();
+                            var dateEnd = endData.split("/");
+
+
+                            var sd = dateStart[1] + '/' + dateStart[0] + '/' + dateStart[2];
+                            var ed = dateEnd[1] + '/' + dateEnd[0] + '/' + dateEnd[2];
+                            // console.log(startData);
+                            // console.log(endData);
+                            var sData = Date.parse(sd);
+                            var eData = Date.parse(ed);
+
+
+                            console.log(sData);
+                            console.log(eData);
+                            //วันที่เริ่มต้นจะต้องไม่มากกว่าวันที่ส้นสุดเสมอ
+                            if (sData < eData) {
+                                //เงื่อนไขถูกต้อง
+                                // console.log("true");
+                                type_search = select_search;
+                                start_data = dateStart[2] + "-" + dateStart[1] + "-" + dateStart[0] + " " + "00:00:00"
+                                    // console.log(start_data);
+                                end_data = dateEnd[2] + "-" + dateEnd[1] + "-" + dateEnd[0] + " " + "00:00:00"
+                                    // console.log(end_data);
+
+                                // window.location = '/report?startDate=' + startData + '&endDate=' + endData;
+                                dataTable.ajax.reload();
+                            } else {
+                                //เงื่นไขผิด
+                                type_search = select_search;
+                                start_data = "";
+                                end_data = "";
+                                console.log("false");
+                                Swal.fire({
+                                    title: "ไม่สามารถค้นหาได้",
+                                    text: "กรุณาใส่วันที่ค้นหาให้ถูกต้อง",
+                                    icon: "warning"
+                                });
+                            }
+                            // window.location = '/?startDate=' + startData + '&endDate=' + endData;
+
+                        });
+                        $('#clear').on('click', function(e) {
+                            //function clear ข้อมูลที่กรอกเข้าไป
+                            $('#start_date').val('');
+                            $('#end_date').val('');
+                        });
+                    },
+                    init: function() {
+                        Feature.searchData();
+                    }
+                }
+            })();
+
+            jQuery(document).ready(function() {
+                Feature.init();
+            });
+        </script>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="../assets/css/font_style.css">
+    <link rel="stylesheet" href="../assets/css/signin.css">
+    <title>เข้าสู่ระบบ</title>
+
+</head>
+
+<body>
+    <div class="parent clearfix">
+        <div class="bg-illustration">
+            <!-- <img src="../assets/images/swu_icon.png" alt="logo"> -->
+
+            <div class="burger-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+
+        <div class="login">
+            <div class="container">
+                <h1>เข้าสู่ระบบ</h1>
+                <!-- start form login -->
+                <div class="login-form">
+                    <form>
+                        <!-- กล่องข้อความกรอก Username -->
+                        <input class=" shadow " type="text" name="username" id="username" placeholder="Username ">
+                        <!-- กล่องข้อความกรอก Password -->
+                        <input class="shadow " type="password" name="password" id="password" placeholder="Password ">
+                    </form>
+                    <br>
+                    <br>
+                    <!-- ปุ่มกด login -->
+                    <button class="btn btn-primary btn-lg shadow w-100" type="submit" name="login" id="login">เข้าสู่ระบบ</button>
+                </div>
+                <!-- end form login -->
+            </div>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript " src="../node_modules/jquery/dist/jquery.min.js "></script>
+<script type="text/javascript " src="../node_modules/sweetalert2/dist/sweetalert2.all.min.js "></script>
+<script>
+    var Feature = (function() {
+
+
+        return {
+            login: function() {
+                //function การทำงานของปุ่ม login
+                $('#login').on('click', function(e) {
+                    //เริ่มรับค่าจ่า tag username,password
+                    var username = $("#username").val();
+                    var password = $("#password").val();
+                    //สิ้นสุดการรับค่า
+
+                    const now = new Date();                                                                     //
+                    const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                    const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                    const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;  
+
+                    if (username == '' || password == '') {
+                        // ถ้า username หรือ password ไม่ได้กรอก จะ alert ในบันทัดที่ 71
+                        $('input[type="text "],input[type="password "]').css("border ", "2px solid red ");
+                        $('input[type="text "],input[type="password "]').css("box-shadow ", "0 0 3px red ");
+                        alert("Please fill all fields...!!!!!! ");
+                    } else {
+                        // ถ้า กรอก username password เเล้วจะสั่งานทำงานที่ file signin.js ใน route
+                        var url = "/signin/PostSignin ";
+                        //สั่งค่า username password ไปตรวจสอบ
+                        $.ajax({
+                                type: 'POST',
+                                url: url,
+                                data: {
+                                    Username: $("#username").val(),
+                                    Password: $("#password").val(),
+                                    datetime : dateNow, 
+                                },
+
+                            })
+                            .done(function(response) {
+                                //login ผ่าน 
+                                if (response["status"] == "Succeed") {
+                                    console.log(response);
+                                    // window.location = '/';
+                                    if (response["data"][0]["role"] == "admin" || response["data"][0]["role"] == "member") {
+                                        //สิทะิ์การใช้งาน admin หน้า home
+                                        // console.log("admin and member");
+                                        window.location = '/';
+                                    } else if (response["data"][0]["role"] == "dpm") {
+                                        //สิทะิ์การใช้งาน department หน้า department
+                                        // console.log("dpm");
+                                        window.location = '/department';
+                                    }
+                                } else if (response["status"] == "Failed") {
+                                    //login ไม่ผ่าน
+                                    if (response["data"] == "Incorrect username") {
+                                        //กรณี username ผิด
+                                        Swal.fire({
+                                            title: "ไม่สามารถเข้าสู่ระบบได้",
+                                            text: "ชื่อผู้ใช้ของท่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง ",
+                                            icon: "warning"
+                                        });
+                                    } else if (response["data"] == "Incorrect password") {
+                                        //กรณี password ผิด
+                                        Swal.fire({
+                                            title: "ไม่สามารถเข้าสู่ระบบได้ ",
+                                            text: "รหัสผ่านของท่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง ",
+                                            icon: "warning"
+                                        });
+                                    }
+
+                                }
+                            });
+                    }
+                });
+
+
+
+            },
+            init: function() {
+                Feature.login();
+            }
+        }
+    })();
+
+    jQuery(document).ready(function() {
+        Feature.init();
+    });
+</script>
+
+
+</html>

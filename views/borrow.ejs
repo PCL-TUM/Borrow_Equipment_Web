@@ -1,0 +1,395 @@
+<%- include('./template/header'); -%> <!-- เรียกใช้ไฟล์ header -->
+<div class="container-fluid"> <!-- [ (container-fluid): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 100% -->
+    <div class="row"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <!-- begin data table [ ส่วนของตารางแสดงการยืมครุภัณฑ์ ] -->
+            <div class="col-lg-9"> <!-- (col-lg-9): กำหนด column เป็น 9 จาก 12 -->
+                <div class="row px-2"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                    <div class="card shadow-sm mb-3"> <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                        <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                            <h5>แสดงข้อมูลการยืม</h5> <!-- tag สร้างข้อความ ' แสดงข้อมูลการยืม ' -->
+                            <hr class="mb-4"> <!-- tag สร้างเส้นตรง -->
+                            <table class=" display nowrap" id="table_id"> <!-- สร้างตาราง ที่มี id= table_id (display nowrap): กำหนดให้สิ่งที่มีความยาวเกิน element นี้จะถูกซ่อนอยู่เบื่องหลัง -->
+                                <thead class="table-navy-blue"> <!-- (table-navy-blue): กำหนดให้แถบคอลัมน์เป็นสีกรม  -->
+                                    <tr> <!-- tag สำหรับกำหนดคอลัมน์ -->
+                                        <th class="text-center">วัน / เดือน / ปี</th> <!-- กำหนดชื่อคอลัมน์เป็น 'วัน / เดือน / ปี' -->
+                                        <th class="text-center">รหัสพนักงาน</th> <!-- กำหนดชื่อคอลัมน์เป็น 'รหัสพนักงาน' -->
+                                        <th class="text-center">ชื่อ - นามสกุล</th> <!-- กำหนดชื่อคอลัมน์เป็น 'ชื่อ - นามสกุล' -->
+                                        <th class="text-center">ชื่อครุภัณฑ์ที่ยืม</th> <!-- กำหนดชื่อคอลัมน์เป็น 'ชื่อครุภัณฑ์ที่ยืม' -->
+                                        <th class="text-center">เลขครุภัณฑ์</th> <!-- กำหนดชื่อคอลัมน์เป็น 'เลขครุภัณฑ์' -->
+                                        <th class="text-center">ยี่ห้อ</th> <!-- กำหนดชื่อคอลัมน์เป็น 'ยี่ห้อ' -->
+                                        <th class="text-center">รุ่น</th> <!-- กำหนดชื่อคอลัมน์เป็น 'รุ่น' -->
+                                        <th class="text-center">เวลายืม</th> <!-- กำหนดชื่อคอลัมน์เป็น 'เวลายืม' -->
+                                    </tr>
+                                </thead>
+                                <tbody> <!-- tag สำหรับกำหนดข้อมูลในตาราง -->
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- end data table -->
+
+        <!-- begin borrow form [ ส่วนของฟอร์มการยืมครุภัณฑ์ ] -->
+        <div class="col-lg-3"> <!-- (col-lg-3): กำหนด column เป็น 3 จาก 12 -->
+            <div class="row px-2 mb-1"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                <div class="card shadow-sm mb-3"> <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                    <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                        <h5>ผู้เบิก</h5> <!-- tag สร้างข้อความ ' ผู้เบิก ' -->
+                        <hr class="mb-4"> <!-- tag สร้างเส้นตรง -->
+                        <div class="row"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                            <div class="input-group mb-3"> <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <label class="col-form-label ms-4 mx-1 px-1">รหัส RFID : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รหัส RFID : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3 me-2" id="member_rfid" maxlength="10" > <!-- สร้างกล่องกรอกข้อความ มี id=member_rfid และ จำกัดข้อความสูงสุด 10 ตัวอักษร -->
+                                <div class="btn btn-warning shadow-sm rounded-3" id="member_clear">เคลียร์ Tag</div> <!-- สร้างปุ่ม 'เคลียร์ Tag' มี id=member_clear มีเงาและหลังสีเหลือง -->
+                            </div>
+                            <div class="input-group mb-3"> <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <label class="col-form-label mx-2">รหัสพนักงาน : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รหัสพนักงาน : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3" id="member_number" disabled> <!-- สร้างกล่องกรอกข้อความ มี id=member_number และทำการปิดเพื่อไม่ให้สามารถกรอกข้อความได้ -->
+                            </div>
+                            <div class="input-group mb-2"> <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <label class="col-form-label ms-1 me-2">ชื่อ - นามสกุล : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'ชื่อ - นามสกุล : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3" id="member_name" disabled> <!-- สร้างกล่องกรอกข้อความ มี id=member_name และทำการปิดเพื่อไม่ให้สามารถกรอกข้อความได้ -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row px-2 mb-1"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                <div class="card shadow-sm mb-3"> <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                    <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                        <h5>ข้อมูลครุภัณฑ์ที่เบิก</h5> <!-- tag สร้างข้อความ ' ข้อมูลครุภัณฑ์ที่เบิก ' -->
+                        <hr class="mb-4"> <!-- tag สร้างเส้นตรง -->
+                        <div class="row"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                            <div class="input-group mb-3"> <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <label class="col-form-label ms-4 mx-1 px-1">รหัส RFID : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รหัส RFID : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3 me-2" id="equipment_rfid" maxlength="10" > <!-- สร้างกล่องกรอกข้อความ มี id=equipment_rfid และ จำกัดข้อความสูงสุด 10 ตัวอักษร -->
+                                <div class="btn btn-warning shadow-sm rounded-3" id="equipment_clear">เคลียร์ Tag</div> <!-- สร้างปุ่ม 'เคลียร์ Tag' มี id=equipment_clear มีเงาและหลังสีเหลือง -->
+                            </div>
+                            <div class="input-group mb-3"> <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <label class="col-form-label ps-1 ms-3 me-2">ชื่อครุภัณฑ์ : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'ชื่อครุภัณฑ์ : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3" id="equipment_name" disabled> <!-- สร้างกล่องกรอกข้อความ มี id=equipment_name และทำการปิดเพื่อไม่ให้สามารถกรอกข้อความได้ -->
+                            </div>
+                            <div class="input-group mb-3"> <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <label class="col-form-label ms-3 me-2">เลขครุภัณฑ์ : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'เลขครุภัณฑ์ : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3" id="equipment_number" disabled> <!-- สร้างกล่องกรอกข้อความ มี id=equipment_number และทำการปิดเพื่อไม่ให้สามารถกรอกข้อความได้ -->
+                                <label class="col-form-label mx-2">S/N : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'S/N : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3" id="equipment_sn" disabled> <!-- สร้างกล่องกรอกข้อความ มี id=equipment_sn และทำการปิดเพื่อไม่ให้สามารถกรอกข้อความได้ -->
+                            </div>
+                            <div class="input-group mb-2"> <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <label class="col-form-label ms-5 ps-3 me-2">ยี่ห้อ : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'ยี่ห้อ : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3" id="equipment_brand" disabled> <!-- สร้างกล่องกรอกข้อความ มี id=equipment_brand และทำการปิดเพื่อไม่ให้สามารถกรอกข้อความได้ -->
+                                <label class="col-form-label ms-3 me-2">รุ่น : </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รุ่น : ' -->
+                                <input type="text" class="form-control shadow-sm rounded-3" id="equipment_model" disabled> <!-- สร้างกล่องกรอกข้อความ มี id=equipment_model และทำการปิดเพื่อไม่ให้สามารถกรอกข้อความได้ -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                <div class="col-lg-12 text-center"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12, (text-center): จัดองค์ประกอบให้อยู่ตรงกลาง -->
+                    <div class="btn btn-outline-secondary shadow-sm" id="cancel_borrow"><i class="fas fa-times me-2"></i>ยกเลิก</div> <!-- สร้างปุ่ม 'ยกเลิก' มี id=cancel_borrow มีเงาและหลังสีใสกรอบสีเทา / (<i class="fas fa-times me-2"></i>):เป็น icon กากบาท -->
+                    <div class="btn btn-success shadow-sm" id="submit_borrow"><i class="fas fa-check me-2"></i>เบิกครุภัณฑ์</div> <!-- สร้างปุ่ม 'เบิกครุภัณฑ์' มี id=submit_borrow มีเงาและพื้นหลังสีเขียว / (<i class="fas fa-check me-2"></i>):เป็น icon กากถูก -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end borrow form -->
+</div>
+
+<%- include('./template/footer'); -%> <!-- เรียกใช้ไฟล์ footer -->
+
+<script>
+    var Feature = (function(){
+        var member_id = "";         // ตัวแปรใช้เก็บข้อมูล id ของพนักงานหรือผู้เบิก
+        var keyup_member = 0;       // ตัวแปรใช้ตรวจสอบการกรอกข้อมูล 'รหัส RFID' ผู้เบิก
+
+        var equipment_id = "";      // ตัวแปรใช้เก็บข้อมูล id ของครุภัณฑ์ที่เบิก
+        var keyup_equipment = 0;    // ตัวแปรใช้ตรวจสอบการกรอกข้อมูล 'รหัส RFID' ข้อมูลครุภัณฑ์ที่เบิก
+
+        var user = JSON.parse('<%- JSON.stringify(udt) %>');
+            user = user.id;         // ช้อมูล id ของ User
+        
+        var dataTable = $('#table_id').DataTable({
+            language: {emptyTable: "ไม่พบข้อมูลการยืมครุภัณฑ์", info: "แสดงข้อมูลการยืมครุภัณฑ์ _TOTAL_ รายการ", infoEmpty: "ไม่พบข้อมูล"},  // กำหนดข้อความแสดงในตารางและจำนวนข้อมูลเมื่อ ' ไม่พบข้อมูลการยืมครุภัณฑ์ '
+            searching: false,       // ปิดฟอร์มค้นหาข้อมูลในตารางของ library
+            initComplete: function (settings, json) {  // กำหนดส่วนเสริมของตารางข้อมูล 
+                $("#table_id").wrap("<div style='overflow:auto; width:100%; position:relative; min-height: 708px; max-height: 708px; background-color: #F9F9F9; margin-bottom: 5px;'></div> ");            
+            },
+            ordering: false,        // ปิดการจัดเรียงข้อมูล
+            lengthChange: false,    // ปิดการจำกัดจำนวนข้อมูล
+            paging: false,          // ปิดตัวแสดงลำดับหน้าของตาราง
+            bAutoWidth: false,      // ปิดการจัดเรียงความกว้างข้อมูล
+            columns:[               // ส่วนของการ loop นำข้อมูลมาใส่ในตาราง
+                        { 
+                            data: function (data) {
+                                var date = ""
+                                    date = (data['borrow_date']).split("T")[0];                                                 // ข้อมูล ' วันที่และเวลา ตัดคำเอาเฉพาะ วันที่ '
+                                    var time = new Date(date);                                                                  // นำข้อมูล วันที่ มาจัดเรียงใหม่
+                                    var year = time.getFullYear() + 543;                                                        // นำข้อมูล วันที่ ที่จัดเรียงใหม่ มา + ปีเพิ่มอีก 543
+                                return time.getDate().toLocaleString()+ "/" + (parseInt(time.getMonth())+1)  + "/" + year;      // ข้อมูล ' วัน / เดือน / ปี '
+                            },
+                            className : 'text-center',                                                                          // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['username'];                            // ข้อมูล ' รหัสพนักงาน '
+                            },
+                            className : 'text-center',                              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['firstname'] + ' ' + data['lastname'];  // ข้อมูล ' ชื่อ - นามสกุล '
+                            },
+                            className : 'text-center',                              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['equipment_name'];                      // ข้อมูล ' ชื่อครุภัณฑ์ที่ยืม '
+                            },
+                        className : 'text-center',                                  // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['equipment_number'];                    // ข้อมูล ' เลขครุภัณฑ์'
+                            },
+                            className : 'text-center',                              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['brand'];                               // ข้อมูล ' ยี่ห้อ '
+                            },
+                        className : 'text-center',                                  // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['model'];                               // ข้อมูล ' รุ่น '
+                            },
+                            className : 'text-center',                              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                var date = ""
+                                    date = data['borrow_date'];                                     // ข้อมูล ' วันที่และเวลา '
+                                    date = date.split("T");                                         // นำข้อมูล วันที่และเวลา มาตัดคำเอาเฉพาะ เวลา 
+                                    date = date[1].split(".")                                       // นำข้อมูล เวลา มาตัด Time Zone ออก
+                                var dateTime = date[0].split(":");                                  // นำข้อมูล เวลา มาแบ่งเป็น ชั่วโมง, นาที, วินาที
+                                    dateTime = dateTime[0] + ":" + dateTime[1] + ' น.';             // นำข้อมูล เวลา เรียงใหม่เป็น " ชั่วโมง : นาที น."
+                                return dateTime;                                                    // ข้อมูล ' เวลายืม '
+                            },
+                            className : 'text-center',                                              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                    ],
+            serverSide: true,               // เปิดการรับ - ส่งข้อมูลของตาราง
+            ajaxSource: '/borrow/search',   // path สำหรับการรับ - ส่งข้อมูล (service)
+            serverData: function (sSource, aaData, fnCallback, oSettings) {     // สร้าง function สำหรับการรับ - ส่งข้อมูล
+                oSettings.jqXHR = $.ajax({          // รับ - ส่งข้อมูลโดยใช้ ajax
+                    dataType: 'json',               // กำหนดรูปแบบข้อมูลเป็น json
+                    type: "POST",                   // กำหนดประเภทการส่งแบบ POST
+                    url: sSource,                   // path สำหรับการรับ - ส่งข้อมูล (ajaxSource)
+                    data: aaData,                   // ข้อมูลที่ส่ง 
+                    success: function (response) {  // ถ้าติดต่อสำเร็จ
+                        if (response.status === "Succeed") {    // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                            if (response.data === "No Borrowing information") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed' แต่ data เป็นคำว่า 'No Borrowing information' คือไม่มีข้อมูลการยืมครุภัณฑ์
+                                response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0};    // จัดเรียงข้อมูลที่ได้รับใหม่
+                            } else {
+                                var response = response.data;
+                                    response = {"aaData": response, "iTotalRecords": response.length, "iTotalDisplayRecords": response.length};      // จัดเรียงข้อมูลที่ได้รับใหม่
+                            }
+                        } else {
+                            response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0};    // จัดเรียงข้อมูลที่ได้รับใหม่
+                        }
+                      
+                        fnCallback(response);   // นำข้อมูลกลับขึ้นไป loop ใน columns
+
+                    }
+                });
+            },
+            createdRow: function (row, data, index) {   // ส่วนของการเขียน dom แต่ไม่ได้ใช้ (T-T)
+            }
+        });
+
+        return {
+            initInput: function () {    // function initInput : สำหรับการรับข้อมูลในฟอร์ม
+                $("#member_rfid").keyup( function (e) {     // ตรวจสอบการรับช้อมูลในฟอร์ม รหัส RFID ส่วนของผู้เบิก 
+                    if (e.target.value.length == 10){       // ถ้ามีจำนวนข้อมูลครบ 10 ตัวอักษร
+                        var member_rfid = $("#member_rfid").val();  // เก็บข้อมูลในฟอร์ม รหัส RFID ส่วนของผู้เบิก 
+                        var url = '/borrow/PostReceiveMember';      // path สำหรับการรับ - ส่งข้อมูล 'ทำรายการยืม' (service) 
+                        $.ajax({                                            // รับ - ส่งข้อมูลโดยใช้ ajax
+                                type: 'POST',                               // กำหนดประเภทการส่งแบบ POST
+                                url: url,                                   // path สำหรับการรับ - ส่งข้อมูล 'ทำรายการยืม' (service)
+                                data: { member_rfid: member_rfid }          // ข้อมูล รหัส RFID ส่วนของผู้เบิก 
+                            })
+                        .done(function(response) {   // ถ้าติดต่อสำเร็จ
+                            if (response.status == "Succeed") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                                var response = response.data[0];    // เลือกข้อมูล response 
+                                    $("#member_number").val(response.username);     // นำข้อมูล response ของรหัสพนักงาน มาใส่ในฟอร์ม 'รหัสพนักงาน' ส่วนของผู้เบิก 
+                                    $("#member_name").val(response.firstname + ' ' + response.lastname);    // นำข้อมูล response ของรหัสพนักงาน มาใส่ในฟอร์ม 'ชื่อ - นามสกุล' ส่วนของผู้เบิก 
+                                    member_id = response.id;        // เก็บข้อมูล id ของผู้เบิก
+                                    keyup_member = 10;              // set keyup
+
+                            } else if (response.status == "Failed") {   // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed'  
+                                Swal.fire({                                                          //                  
+                                    title: "ไม่พบข้อมูล",                                              //     
+                                    text: "ไม่พบข้อมูลรหัส RFID นี้ กรุณาลองใหม่อีกครั้ง ",                   //   >> แสดงป้อปอัพ แจ้งเตื่อน 
+                                    icon: "warning",                                                //
+                                    confirmButtonText: "ตกลง",                                      //
+                                });
+                            }
+                        });
+                    }
+                    else if (keyup_member == 10) {      // เงื่อนไขนี้สำหรับ ถ้ามีจำนวนข้อมูลครบ 10 ตัวอักษร แต่ทำการกดปุ่มลบ จะทำการเคลียร์ข้อมูลฟอร์ม
+                        $("#member_rfid").val('');      // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                        $("#member_number").val('');    // ทำให้ฟอร์ม 'รหัสพนักงาน' ว่าง
+                        $("#member_name").val('');      // ทำให้ฟอร์ม 'ชื่อ - นามสกุล' ว่าง
+                        keyup_member = 0;               // set keyup
+                    }
+                });
+                $("#equipment_rfid").keyup( function (e) {  // ตรวจสอบการรับช้อมูลในฟอร์ม รหัส RFID ส่วนของข้อมูลครุภัณฑ์ที่เบิก
+                    if (e.target.value.length == 10){       // ถ้ามีจำนวนข้อมูลครบ 10 ตัวอักษร
+                        var equipment_rfid = $("#equipment_rfid").val();    // เก็บข้อมูลในฟอร์ม รหัส RFID ส่วนของข้อมูลครุภัณฑ์ที่เบิก
+                        var url = '/borrow/PostReceiveEquip';               // path สำหรับการรับ - ส่งข้อมูล 'ข้อมูลครุภัณฑ์' (service)
+                        $.ajax({                                                    // รับ - ส่งข้อมูลโดยใช้ ajax
+                                type: 'POST',                                       // กำหนดประเภทการส่งแบบ POST
+                                url: url,                                           // path สำหรับการรับ - ส่งข้อมูล 'ข้อมูลครุภัณฑ์' (service)
+                                data: { equip_rfid: equipment_rfid, }               // ข้อมูล รหัส RFID ส่วนของข้อมูลครุภัณฑ์ที่เบิก
+                            })
+                        .done(function(response) {      // ถ้าติดต่อสำเร็จ
+                            if (response.status == "Succeed") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                                var response = response.data[0];    // เลือกข้อมูล response 
+                                    $("#equipment_name").val(response.equipment_name);      // นำข้อมูล response ของชื่อครุภัณฑ์ มาใส่ในฟอร์ม 'ชื่อครุภัณฑ์' ข้อมูลครุภัณฑ์ที่เบิก
+                                    $("#equipment_number").val(response.equipment_number);  // นำข้อมูล response ของเลขครุภัณฑ์ มาใส่ในฟอร์ม 'เลขครุภัณฑ์' ข้อมูลครุภัณฑ์ที่เบิก
+                                    $("#equipment_sn").val(response.serial_number);         // นำข้อมูล response ของ S/N มาใส่ในฟอร์ม 'S/N' ข้อมูลครุภัณฑ์ที่เบิก
+                                    $("#equipment_brand").val(response.brand);              // นำข้อมูล response ของยีห้อ มาใส่ในฟอร์ม 'ยีห้อ' ข้อมูลครุภัณฑ์ที่เบิก
+                                    $("#equipment_model").val(response.model);              // นำข้อมูล response ของรุ่น มาใส่ในฟอร์ม 'รุ่น' ข้อมูลครุภัณฑ์ที่เบิก
+                                    equipment_id = response.id;                             // เก็บข้อมูล id ของข้อมูลครุภัณฑ์ที่เบิก
+                                    keyup_equipment = 10;                                   // set keyup
+
+                            } else if (response.status == "Failed") {    // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed'
+                                Swal.fire({                                                 //
+                                    title: "ไม่พบข้อมูล",                                     //
+                                    text: "ไม่พบข้อมูลรหัส RFID นี้ กรุณาลองใหม่อีกครั้ง ",          //    >> แสดงป้อปอัพแจ้งเตื่อน 
+                                    icon: "warning",                                        //
+                                    confirmButtonText: "ตกลง",                              //
+                                });
+                            }
+                        });
+                    }
+                    else if (keyup_equipment == 10) {       // เงื่อนไขนี้สำหรับ ถ้ามีจำนวนข้อมูลครบ 10 ตัวอักษร แต่ทำการกดปุ่มลบ จะทำการเคลียร์ข้อมูลฟอร์ม
+                        $("#equipment_rfid").val('');       // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                        $("#equipment_name").val('');       // ทำให้ฟอร์ม 'ชื่อครุภัณฑ์' ว่าง
+                        $("#equipment_number").val('');     // ทำให้ฟอร์ม 'เลขครุภัณฑ์' ว่าง
+                        $("#equipment_sn").val('');         // ทำให้ฟอร์ม 'S/N' ว่าง
+                        $("#equipment_brand").val('');      // ทำให้ฟอร์ม 'ยี่ห้อ' ว่าง
+                        $("#equipment_model").val('');      // ทำให้ฟอร์ม 'รุ่น' ว่าง
+                        keyup_equipment = 0;  // set keyup
+                    }
+                });
+            },
+            initButton: function () {   // function initButton : สำหรับการทำงานของปุ่ม
+                $('#member_clear').on('click', function (e) {   // ปุ่ม 'เคลียร์ Tag' ของผู้เบิก
+                    keyup_member = 0;                           // set keyup
+                    $("#member_rfid").val('');                  // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                    $("#member_number").val('');                // ทำให้ฟอร์ม 'รหัสพนักงาน' ว่าง
+                    $("#member_name").val('');                  // ทำให้ฟอร์ม 'ชื่อ - นามสกุล' ว่าง
+                });
+                $('#equipment_clear').on('click', function (e) {    // ปุ่ม 'เคลียร์ Tag' ของข้อมูลครุภัณฑ์ที่เบิก
+                    keyup_equipment = 0;                            // set keyup
+                    $("#equipment_rfid").val('');                   // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                    $("#equipment_name").val('');                   // ทำให้ฟอร์ม 'ชื่อครุภัณฑ์' ว่าง
+                    $("#equipment_number").val('');                 // ทำให้ฟอร์ม 'เลขครุภัณฑ์' ว่าง
+                    $("#equipment_sn").val('');                     // ทำให้ฟอร์ม 'S/N' ว่าง
+                    $("#equipment_brand").val('');                  // ทำให้ฟอร์ม 'ยีห้อ' ว่าง
+                    $("#equipment_model").val('');                  // ทำให้ฟอร์ม 'รุ่น' ว่าง
+                });
+                $('#submit_borrow').on('click', function (e) {  // ปุ่ม 'เบิกครุภัณฑ์'       
+                    if (($("#member_rfid").val() && $("#member_number").val() && $("#member_name").val() && // ตรวจสอบข้อมูลในฟอร์มของผู้เบิก ต้องไม่ว่าง
+                         $("#equipment_rfid").val() && $("#equipment_name").val() && $("#equipment_number").val() && $("#equipment_sn").val() && $("#equipment_brand").val() && $("#equipment_model").val()) != "" ) { // ตรวจสอบข้อมูลในฟอร์มของข้อมูลครุภัณฑ์ที่เบิก ต้องไม่ว่าง
+                            Feature.submitBorrow();  // ทำงาน function submitBorrow
+                    } else {  // ถ้าฟอร์มกรอกข้อมูล ว่าง   
+                        Swal.fire({                                                  //
+                            title: "ผิดพลาด",                                        //
+                            text: 'กรุณาตรวจสอบข้อมูลให้ครบก่อนกดปุ่ม "เบิกครุภัณฑ์"',       // >> แสดงป้อปอัพแจ้งเตื่อน
+                            icon: "warning",                                        //
+                            confirmButtonText: "ตกลง",                              //
+                        });
+                    }
+                });
+                $('#cancel_borrow').on('click', function (e) {   // ปุ่ม 'ยกเลิก'  
+                    keyup_member = 0        // set keyup
+                    keyup_equipment = 0;    // set keyup
+                    // member
+                    $("#member_rfid").val('');          // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                    $("#member_number").val('');        // ทำให้ฟอร์ม 'รหัสพนักงาน' ว่าง
+                    $("#member_name").val('');          // ทำให้ฟอร์ม 'ชื่อ - นามสกุล' ว่าง
+                    // equipment
+                    $("#equipment_rfid").val('');       // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                    $("#equipment_name").val('');       // ทำให้ฟอร์ม 'ชื่อครุภัณฑ์' ว่าง
+                    $("#equipment_number").val('');     // ทำให้ฟอร์ม 'เลขครุภัณฑ์' ว่าง
+                    $("#equipment_sn").val('');         // ทำให้ฟอร์ม 'S/N' ว่าง
+                    $("#equipment_brand").val('');      // ทำให้ฟอร์ม 'ยีห้อ' ว่าง
+                    $("#equipment_model").val('');      // ทำให้ฟอร์ม 'รุ่น' ว่าง
+                });
+            },
+            submitBorrow: function () {  // function submitBorrow สำหรับการส่งข้อมูลเพื่อบันทึการเบิกครุภัณฑ์
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       // >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;                                                                          //
+
+                var url = '/borrow/PostBorrow';     // path ส่งข้อมูล 'บันทึกการเบิกครุภัณฑ์' (service)
+                    $.ajax({                        // รับ - ส่งข้อมูลโดยใช้ ajax
+                            type: 'POST',           // กำหนดประเภทการส่งแบบ POST
+                            url: url,               // path ส่งข้อมูล 'บันทึกการเบิกครุภัณฑ์' (service)
+                            data: { 
+                                    member_id: member_id,           // ข้อมูล id ของพนักงานหรือผู้เบิก
+                                    equipment_id: equipment_id,     // ข้อมูล id ของครุภัณฑ์ที่เบิก
+                                    admin_approve_borrow : user,    // ช้อมูล id ของ User
+                                    borrow_date: dateNow            // วันที่และเวลา ปัจจุบัน
+                                  } 
+                        })
+                    .done(function(response) {   // ถ้าติดต่อสำเร็จ
+                        if (response.status == "Succeed") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                            Swal.fire({                               //   
+                                title: "สำเร็จ",                       //
+                                text: "เบิกครุภัณฑ์สำเร็จ ",              //  >> แสดงป้อปอัพ แจ้งเตื่อน
+                                icon: "success",                     //
+                                confirmButtonText: "ตกลง",           //
+                            }).then((result) => {
+                                if (result.isConfirmed) {            // เมื่อกดปุ่ม ตกลง
+                                    window.location.reload();        // รีโหลดหน้าเว็บไซต์
+                                }
+                            });
+                        } else if (response.status == "Failed") {   // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed'  
+                            if(response.data == "Insert Fail"){
+                                Swal.fire({                          //
+                                title: "ไม่สามารถเบิกครุภัณฑ์ได้",        //
+                                text: "กรุณาลองใหม่อีกครั้ง",            //  >> แสดงป้อปอัพ แจ้งเตื่อน
+                                icon: "error",                      //
+                                confirmButtonText: "ตกลง",          //
+                                });
+                            } else if(response.data == "Equip is borrowed"){
+                                Swal.fire({                                       //
+                                title: "ไม่สามารถเบิกครุภัณฑ์ได้",                     //
+                                text: "ครุภัณฑ์นี้ถูกยืมไปแล้ว กรุณาลองใหม่อีกครั้ง ",       //  >> แสดงป้อปอัพ แจ้งเตื่อน
+                                icon: "error",                                    //
+                                confirmButtonText: "ตกลง",                       //
+                                });
+                            }
+                        }
+                    });
+            },
+            init: function () {     // function init : เป็น function ที่รวม function ที่ต้องการเรียกใช้งานเมื่อเริ่มเว็บไซต์
+                Feature.initInput();    // สำหรับการรับข้อมูลในฟอร์ม
+                Feature.initButton();   // สำหรับการทำงานของปุ่ม
+            }
+        }
+    })();
+  
+    jQuery(document).ready(function () {
+      Feature.init();  // เรียกใช้ function เมื่อเริ่มเว็บไซต์
+      
+    });  
+</script>

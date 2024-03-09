@@ -1,0 +1,251 @@
+<%- include('./template/header'); -%>
+    <div class="container-xl">
+        <div class="row">
+            <div class="col-lg-6">
+
+            </div>
+            <div class="col-lg-6">
+                <div class="col-lg-12">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body pb-0">
+                            <div class="row">
+                                <div class="col-xxl-8 mb-3 ">
+                                    <div class="input me-2">
+                                        <!-- การแสดง tag rfid -->
+                                        <input type="text" id="rfid" name="rfid" class="form-control " placeholder="RFID " aria-label="rfid ">
+                                    </div>
+                                </div>
+
+                                <div class="col-xxl-4 mb-3 text-end">
+                                    <!-- ป้าย rfid -->
+                                    <button class="btn btn-warning w-100" id="searchRfid" type="button" disabled><i class="fas fa-key me-2 "></i>RFID</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-lg-12 ">
+                <div class="card shadow-sm ">
+                    <div class="card-body ">
+                        <table class="display nowrap" id="table_id">
+                            <!-- หัวตาราง -->
+                            <thead class="table-navy-blue ">
+                                <tr>
+                                    <th class="text-center ">รหัส RFID</th>
+                                    <th class="text-center ">S/N</th>
+                                    <th class="text-center ">เลขครุภัณฑ์</th>
+                                    <th class="text-center ">ชื่อครุภัณฑ์</th>
+                                    <th class="text-center ">ยี่ห้อ</th>
+                                    <th class="text-center ">รุ่น</th>
+                                </tr>
+                            </thead>
+                            <!-- สิ้นสุดหัวตาราง -->
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('./template/footer'); -%>
+
+        <script>
+            var Feature = (function() {
+                var user = '<%- JSON.stringify(udt) %>';
+                var user_data = JSON.parse(user);
+                // console.log("user_id" +
+                //     user_data["id"]);
+                // console.log(user);
+                var today = new Date();
+                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                var dateTime = date + " " + time;
+                // console.log(dateTime);
+                //เริ่มการแสดงค่าในตาราง
+                var dataTable = $('#table_id').DataTable({
+                    language: {
+                        emptyTable: "ไม่พบรายการแผนก",
+                        info: "แสดงรายการแผนก _TOTAL_ รายการ",
+                        infoEmpty: "ไม่พบข้อมูล"
+                    },
+                    searching: false,
+                    responsive: true,
+                    initComplete: function(settings, json) {
+
+                        $("#table_id").wrap("<div style='overflow:auto; width:100%; position:relative; max-height: 708px; background-color: #F9F9F9; margin-bottom: 5px;'></div> ");
+
+                    },
+                    ordering: false,
+                    lengthChange: false,
+                    paging: false,
+                    // iDisplayLength: 10,
+                    bAutoWidth: false,
+                    columns: [{
+                        //แสดง rfid ในตาราง
+                        data: function(data) {
+                            return data['rfid'];
+
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดง serial number ในตาราง
+                        data: function(data) {
+                            return data['serial_number'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดงเลขครุ ในาราง
+                        data: function(data) {
+                            return data['equipment_number'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดงชื่อครุ ในตาราง
+                        data: function(data) {
+                            return data['equipment_name'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดงชื่อยี่ฮ้อ
+                        data: function(data) {
+                            return data['brand'];
+                        },
+                        className: 'text-center',
+                    }, {
+                        //แสดง model ในตาราง
+                        data: function(data) {
+                            return data['model'];
+                        },
+                        className: 'text-center',
+                    }, ],
+                    serverSide: true,
+                    ajaxSource: '/department/PostEquipDmp',
+                    serverData: function(sSource, aaData, fnCallback, oSettings) {
+                        aaData.push({
+                            //ส่ง rfid ไปเพิ่มข้อมูล
+                            "name": "rfid",
+                            "value": ""
+                        });
+                        aaData.push({
+                            //ส่ง department ID
+                            "name": "dpmID",
+                            "value": user_data["id"]
+                        });
+                        aaData.push({
+                            //ส่งวันที่ 
+                            "name": "datetime",
+                            "value": dateTime
+                        });
+                        oSettings.jqXHR = $.ajax({
+                            dataType: 'json',
+                            type: "POST",
+                            url: sSource,
+                            data: aaData,
+                            success: function(response) {
+                                // console.log(response);
+                                // console.log(response);
+                                if (response.status === "Succeed") {
+                                    var response = response.data;
+                                    response = {
+                                        "aaData": response,
+                                        "iTotalRecords": response.length,
+                                        "iTotalDisplayRecords": response.length
+                                    };
+                                } else {
+
+                                    response = {
+                                        "aaData": [],
+                                        "iTotalRecords": 0,
+                                        "iTotalDisplayRecords": 0
+                                    };
+
+                                }
+                                fnCallback(response);
+
+                            }
+                        });
+                    },
+                    createdRow: function(row, data, index) {}
+                });
+
+                return {
+                    initInput: function() {
+                        //cursor วางที่ rfid เสมอ
+                        $("#rfid").focus();
+                        //การเอา rfid ใส่ลงใน กล่อง rfid
+                        $("#rfid").keyup(function(e) {
+                            //เมื่อ rfid ครบ 10 หลักทำการ สั่งเพิ่มข้อมูล
+                            if (e.target.value.length == 10) {
+                                var rfid_data = $("#rfid").val();
+                                var url = '/department/PostEquipDmp';
+                                $.ajax({
+                                        type: 'POST',
+                                        url: url,
+                                        data: {
+                                            rfid: rfid_data,
+                                            dpmID: user_data["id"],
+                                            datetime: dateTime
+
+                                        }
+                                    })
+                                    .done(function(response) {
+
+                                        if (response["status"] == "Succeed") {
+                                            //เพิ่มข้อมูลสำเร็บจะไปหน้า department
+                                            // console.log(response);
+                                            window.location = '/department';
+                                        } else if (response["status"] == "Failed") {
+                                            if (response["data"] == "No Equip information") {
+                                                //แสดง alert ไม่พบข้อสูล
+                                                Swal.fire({
+                                                    title: "ไม่พบข้อมูล",
+                                                    text: "ไม่พบข้อมูลรหัส RFID นี้ กรุณาลองใหม่อีกครั้ง",
+                                                    icon: "warning"
+                                                });
+                                            } else if (response["data"] == "Equip is not borrowed or reverted") {
+                                                //แสดง alert เกิดข้อผิดพลาด ครุภัณฑ์นี้ยังไม่ถูกยืมหรือถูกคืนแล้ว กรุณาตรวจสอบอีกครั้ง
+                                                Swal.fire({
+                                                    title: "ผิดพลาด",
+                                                    text: "ครุภัณฑ์นี้ยังไม่ถูกยืมหรือถูกคืนแล้ว กรุณาตรวจสอบอีกครั้ง",
+                                                    icon: "warning"
+                                                });
+                                            } else if (response["data"] == "Error") {
+                                                //แสดง alert เกิดข้อผิดพลาด
+                                                Swal.fire({
+                                                    title: "ผิดพลาด",
+                                                    text: "กรุณาลองใหม่อีกครั้ง",
+                                                    icon: "warning"
+                                                });
+                                            }
+
+                                        }
+                                    })
+                            }
+                        });
+                    },
+                    searchData: function() {
+                        $('#search').on('click', function(e) {
+                            var textSearch = $('#idSearch').val();
+                            if (textSearch != "") {
+                                window.location = '/section?search=' + textSearch;
+                            } else {
+                                // console.log("field null!!");
+                            }
+                        });
+                    },
+                    init: function() {
+                        Feature.searchData();
+                        Feature.initInput();
+                    }
+                }
+            })();
+
+            jQuery(document).ready(function() {
+                Feature.init();
+            });
+        </script>

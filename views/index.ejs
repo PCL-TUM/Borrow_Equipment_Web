@@ -1,0 +1,166 @@
+<%- include('./template/header'); -%> <!-- เรียกใช้ไฟล์ header -->
+
+<div class="container-xl my-3"> <!-- (container-xl): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 80%, (my-3): ปรับระยะห่างภายนอกในแนวแกน y 16px-->
+
+ <!-- begin search table [ ส่วนของฟอร์มการค้นหา ] -->
+    <div class="row"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-6"></div> <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+        <div class="col-lg-6"> <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+            <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                <div class="card shadow-sm mb-3"> <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                    <div class="card-body pb-0"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด, (pb-0): ปรับระยะห่างภายในด้านล่าง 0px -->
+                        <div class="row"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+                            <div class="col-xxl-8 mb-3"> <!-- (col-xxl-8): กำหนด column เป็น 8 จาก 12 (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                                <input type="text" class="form-control shadow-sm" id="equipmentSearch" placeholder="ค้นหาข้อมูลครุภัณฑ์"> <!-- สร้างกล่องกรอกข้อความ มี id=equipmentSearch และมีลายน้ำในกล่องเป็น ' ค้นหาข้อมูลครุภัณฑ์ ' -->
+                            </div>
+                            <div class="col-xxl-4 mb-3 text-end"> <!-- (col-xxl-4): กำหนด column เป็น 4 จาก 12 (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                                <div class="btn btn-outline-secondary shadow-sm" id="clear"><i class="fas fa-times me-2"></i>ยกเลิก</div> <!-- สร้างปุ่ม 'ยกเลิก' มี id=clear มีเงาและหลังสีใสกรอบสีเทา / (<i class="fas fa-times me-2"></i>):เป็น icon กากบาท -->
+                                <div class="btn btn-success shadow-sm" id="search"><i class="fas fa-search me-2"></i>ค้นหา</div> <!-- สร้างปุ่ม 'ค้นหา' มี id=search มีเงาและพื้นหลังสีเขียว / (<i class="fas fa-search me-2"></i>):เป็น icon แว่นขยาย -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end search table -->
+
+    <!-- begin data table [ ส่วนของตารางแสดงข้อมูลครุภัณฑ์ ] -->
+    <div class="row"> <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-12"> <!-- (col-lg-6): กำหนด column เป็น 12 จาก 12 -->
+            <div class="card shadow-sm"> <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา -->
+                <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                    <table class="display nowrap mt-1 mb-3" id="table_id"> <!-- สร้างตาราง ที่มี id= table_id (display nowrap): กำหนดให้สิ่งที่มีความยาวเกิน element นี้จะถูกซ่อนอยู่เบื่องหลัง, (mt-1 mb-3): ปรับระยะห่างภายนอกด้านบน 4px และด้านล่าง 16px -->
+                        <thead class="table-navy-blue"> <!-- (table-navy-blue): กำหนดให้แถบคอลัมน์เป็นสีกรม  -->
+                            <tr> <!-- tag สำหรับกำหนดคอลัมน์ -->
+                                <th class="text-center">ลำดับ</th> <!-- กำหนดชื่อคอลัมน์เป็น 'ลำดับ' -->
+                                <th class="text-center">ชื่อครุภัณฑ์</th> <!-- กำหนดชื่อคอลัมน์เป็น 'ชื่อครุภัณฑ์' -->
+                                <th class="text-center">ยี่ห้อ</th> <!-- กำหนดชื่อคอลัมน์เป็น 'ยี่ห้อ' -->
+                                <th class="text-center">รุ่น</th> <!-- กำหนดชื่อคอลัมน์เป็น 'รุ่น' -->
+                                <th class="text-center">คงเหลือ</th> <!-- กำหนดชื่อคอลัมน์เป็น 'คงเหลือ' -->
+                            </tr>
+                        </thead>
+                        <tbody> <!-- tag สำหรับกำหนดข้อมูลในตาราง -->
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end data table -->
+
+</div>
+
+<%- include('./template/footer'); -%> <!-- เรียกใช้ไฟล์ footer -->
+
+<script>
+    var Feature = (function(){
+        var countOrder = 0; // ตัวแปรในการสร้างลำดับข้อมูลในตาราง
+        var aaSearch = "";  // ตัวแปรในการค้นหาข้อมูลในตาราง
+
+        var dataTable = $('#table_id').DataTable({
+            language: {emptyTable: "ไม่พบข้อมูลครุภัณฑ์", info: "แสดงข้อมูลครุภัณฑ์ _TOTAL_ รายการ", infoEmpty: "ไม่พบข้อมูล"}, // กำหนดข้อความแสดงในตารางและจำนวนข้อมูลเมื่อ ' ไม่พบข้อมูลครุภัณฑ์ '
+            searching: false,       // ปิดฟอร์มค้นหาข้อมูลในตารางของ library
+            initComplete: function (settings, json) { // กำหนดส่วนเสริมของตารางข้อมูล
+                $("#table_id").wrap("<div style='overflow:auto; width:100%; position:relative; max-height: 708px; margin-bottom: 5px;'></div> "); // กำหนด style ของตารางข้อมูล (overflow:auto): ปรับไม่ให้เวลาย่อตารางข้อมูลแล้วตัวหนังสือตกบรรทัด, (width:100%): ปรับความกว่างเป็น 100%, (position:relative): ปรับการแสดงข้อมูลในตำแหน่งคงที่, (max-height): ปรับความยาวสูงสุดของตารางเป็น 708px (ปล.จะแสดงข้อมูล 1-10 แล้วที่เหลือจะเป็น scollBar แบบเลื่อนขึ้นลง), (margin-bottom): ปรับความสูงภายนอกด้างล่าง 5px:        
+            },
+            ordering: false,        // ปิดการจัดเรียงข้อมูล
+            lengthChange: false,    // ปิดการจำกัดจำนวนข้อมูล
+            paging: false,          // ปิดตัวแสดงลำดับหน้าของตาราง
+            bAutoWidth: false,      // ปิดการจัดเรียงความกว้างข้อมูล
+            columns:[               // ส่วนของการ loop นำข้อมูลมาใส่ในตาราง
+                        { 
+                            data: function (data) {
+                                countOrder++                        // เมื่อมีข้อมูล ตัวแปร countOrder จะมีค่าเพิ่มขึ้นทีละ 1
+                                return countOrder;                  // ข้อมูล ' ลำดับ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['equipment_name'];      // ข้อมูล ' ชื่อครุภัณฑ์ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['brand'];               // ข้อมูล ' ยี่ห้อ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['model'];               // ข้อมูล ' รุ่น '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['total'];               // ข้อมูล ' คงเหลือ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                    ],
+            serverSide: true,       // เปิดการรับ - ส่งข้อมูลของตาราง
+            ajaxSource: '/search',  // path สำหรับการรับ - ส่งข้อมูล (service)
+            serverData: function (sSource, aaData, fnCallback, oSettings) {  // สร้าง function สำหรับการรับ - ส่งข้อมูล
+                aaData.push({ "name": "search", "value": aaSearch});         // กำหนดข้อมูลที่จะค้นหา
+                
+                oSettings.jqXHR = $.ajax({          // รับ - ส่งข้อมูลโดยใช้ ajax
+                    dataType: 'json',               // กำหนดรูปแบบข้อมูลเป็น json
+                    type: "POST",                   // กำหนดประเภทการส่งแบบ POST
+                    url: sSource,                   // path สำหรับการรับ - ส่งข้อมูล (ajaxSource)
+                    data: aaData,                   // ข้อมูลที่ส่ง 
+
+                    success: function (response) {  // ถ้าติดต่อสำเร็จ
+                        if (response.status === "Succeed") {  // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'
+                            if (response.data === "No Reverting information") {  // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed' แต่ data เป็นคำว่า 'No Reverting information' คือไม่มีข้อมูลครุภัณฑ์
+                                response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0}; // จัดเรียงข้อมูลที่ได้รับใหม่
+                            } else {
+                                var response = response.data;
+                                    response = {"aaData": response, "iTotalRecords": response.length, "iTotalDisplayRecords": response.length}; // จัดเรียงข้อมูลที่ได้รับใหม่
+                            }
+                        } else { // ถ้าได้รับ response กลับมาไม่เป็นคำว่า 'Succeed'
+                            response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0}; // จัดเรียงข้อมูลที่ได้รับใหม่
+                        }
+                      
+                        fnCallback(response); // นำข้อมูลกลับขึ้นไป loop ใน columns
+
+                    }
+                });
+            },
+            createdRow: function (row, data, index) { // ส่วนของการเขียน dom แต่ไม่ได้ใช้ (T-T)
+            }
+        });
+
+        return {
+            searchData: function () {       // function searchData : สำหรับการค้นหาข้อมูล
+
+                $('#search').on('click', function (e) {     // เมื่อกดปุ่ม element ที่มี id = search จะทำงาน (ปุ่มค้นหา)
+
+                    var equipmentSearch = $('#equipmentSearch').val();  // รับข้อมูลจากกล่องกรอกข้อความที่มี id= equipmentSearch มาเก็บไว้ในตัวแปร equipmentSearch
+                        aaSearch = equipmentSearch.trim();              // กำหนดให้ตัวแปร aaSearch เก็บค่า ตัวแปร equipmentSearch และ (.trim) ทำการตัดคำว่างออก
+                        countOrder = 0;                                 // กำหนดให้ตัวแปร countOrder เป็น 0 เพื่อจัดเรียงข้อมูลในตารางใหม่
+                        dataTable.ajax.reload();                        // สั่งให้ตารางข้อมูลทำการ รับ - ส่งข้อมูลใหม่อีกครั้ง
+                });
+                $('#clear').on('click', function (e) {      // เมื่อกดปุ่ม element ที่มี id = clear จะทำงาน (ปุ่มยกเลิก)
+
+                    $('#equipmentSearch').val('');                      // กำหนดกล่องกรอกข้อความ id= equipmentSearch เป็นค่าว่าง
+                        aaSearch = "";                                  // กำหนดให้ตัวแปร aaSearch เป็นค่าว่าง
+                        countOrder = 0;                                 // กำหนดให้ตัวแปร countOrder เป็น 0 เพื่อจัดเรียงข้อมูลในตารางใหม่
+                        dataTable.ajax.reload();                        // สั่งให้ตารางข้อมูลทำการ รับ - ส่งข้อมูลใหม่อีกครั้ง
+                });
+            },
+            init: function () {
+                Feature.searchData();       // กำหนดให้เรียกใช้งาน function searchData
+            }
+        }
+    })();
+  
+    jQuery(document).ready(function () {    // กำหนดให้เรียกใช้งาน jQuery ทันทีเมื่อมีการเปิดหน้าเว็บไซต์
+
+      Feature.init();                       // กำหนดให้เรียกใช้งาน function init
+      
+    });  
+</script>

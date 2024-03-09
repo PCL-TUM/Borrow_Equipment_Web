@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- begin html [ ส่วนของการประกาศ tag HTML ] -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- set icon page title -->
+    <link rel = "icon" href = "../../assets/images/icon-title.png" type = "image/x-icon">
+
+    <!-- begin import css [ ส่วนการเรียก library css มาใช้ในเว็บไซต์ ] -->
+    <link rel="stylesheet" href="../../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../../node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="../../node_modules/datatables.net-dt/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="../../node_modules/dropzone/dist/dropzone.css">
+    <link rel="stylesheet" href="../../assets/css/font_style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- end import css -->
+
+    <!-- begin title [ ส่วนของการประกาศชื่อของหน้าเว็บไซต์แต่ละหน้า ] --> 
+    <title>
+        <%- title %>
+    </title>
+    <!-- end title -->
+
+</head>
+<script>
+    console.log("<%- role %>")
+</script>
+<!-- begin body [ ส่วนของการประกาศชื่อของเว็บไซต์  เป็นส่วนเนื้อหาหลักของหน้าเว็บและการแสดงผล ] -->
+<body class="bg-light d-flex flex-column min-vh-100"> <!-- [ (bg-light): ทำให้พื้นหลังเป็นสีเทา, (d-flex flex-column): ปรับขนาดหน้าเว็บไซต์ให้มองเป็น Column, (min-vh-100): ปรับความสูงของหน้าเว็บให้เต็ม 100% ] -->
+    <!--begin navbar [ ส่วนของเมนูยาร์ของเว็บไซต์ ] -->
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-navy-blue shadow-lg"> <!-- [ (navbar navbar-expand-lg): ทำให้ element ส่วนนี้เป็นแถบเมนูบาร์ขนาด lg, (navbar-dark): ทำให้แถบเมนูบาร์เป็นธีมมืด, (bg-navy-blue): เปลี่ยนสีพื้นหลังเป็นสีกรม, (shadow-lg): เพิ่มเงาให้แถบเมนูบาร์  ] -->
+            <div class="container-fluid mx-5"> <!-- [ (container-fluid): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 100%, (mx-5): ปรับความกว้างภายนอก 12px ] -->
+                <% if(role == "admin" || role == "member"){ %> 
+                <a class="navbar-brand" href="/"> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'ข้อมูลครุภัณฑ์' [ (navbar-brand): กำหนดตำแหน่ง icon บนแถบเมนูบาร์ ] -->
+                    <img src="../../assets/images/swu_icon.svg" class="" style="width: 40px;"> <!-- src: เรียกรูปตรามหาวิทยาลัยศรีนครินทรวิโรฒ และปรับความกว้าง ความสูง 40px -->
+                </a>
+                <% } else { %>
+                <a class="navbar-brand" href="/department"> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'ข้อมูลครุภัณฑ์' [ (navbar-brand): กำหนดตำแหน่ง icon บนแถบเมนูบาร์ ] -->
+                    <img src="../../assets/images/swu_icon.svg" class="" style="width: 40px;"> <!-- src: เรียกรูปตรามหาวิทยาลัยศรีนครินทรวิโรฒ และปรับความกว้าง ความสูง 40px -->
+                </a>
+                <% } %>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span> <!-- ปุ่มสำหรับเปิด-ปิดเมนู เมื่อย่อขนาดหน้าเว็บไซต์ -->
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0"> <!-- [ (navbar-nav): สร้างโครงสำหรับการวางองค์ประกอบของเมนู, (me-auto): กำหนดระยะหว่างภายนอกแบบด้านขวาอัตโนมัติ, (mb-md-0): กำหนดระยะหว่างภายนอกแบบด้านล่าง 0px ] -->
+                        <% if(role != "dpm"){ %>
+                        <li class="nav-item" id="equipment"> <!-- id: equipment [ (nav-item): กำหนดให้เป็นองค์ประกอบที่อยู่ในเมนูบาร์ ] -->
+                            <a class="nav-link active" href="/">ข้อมูลครุภัณฑ์</a> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'ข้อมูลครุภัณฑ์'-->
+                        </li>
+                        <% } %>
+                        <% if(role == "admin"){ %> <!-- เงื่อนไขถ้า role เป็น 'admin' จะทำการแสดงเมนู : ทำรายการยืม, ทำรายการคืน, รายงาน, แจ้งเตือน -->
+                        <li class="nav-item" id="borrow"> <!-- id: borrow [ (nav-item): กำหนดให้เป็นองค์ประกอบที่อยู่ในเมนูบาร์ ] -->
+                            <a class="nav-link active" href="/borrow">ทำรายการยืม</a> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'ทำรายการยืม' -->
+                        </li>
+                        <li class="nav-item" id="return"> <!-- id: return [ (nav-item): กำหนดให้เป็นองค์ประกอบที่อยู่ในเมนูบาร์ ] -->
+                            <a class="nav-link active" href="/return">ทำรายการคืน</a> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'ทำรายการคืน' -->
+                        </li>
+                        <li class="nav-item" id="report"> <!-- id: report [ (nav-item): กำหนดให้เป็นองค์ประกอบที่อยู่ในเมนูบาร์ ] -->
+                            <a class="nav-link active" href="/report">รายงาน</a> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'รายงาน' -->
+                        </li>
+                        <li class="nav-item" id="notification"> <!-- id: notification [ (nav-item): กำหนดให้เป็นองค์ประกอบที่อยู่ในเมนูบาร์ ] -->
+                            <a class="nav-link active" href="/notification">แจ้งเตือน <!-- href: เมื่อกดจะสั่งไปยังหน้า 'แจ้งเตือน' -->
+                                <span id="datanoti" class=""> 
+                                     <!-- กำหนดพื้นที่ว่างสำหรับเพิ่ม class สำหรับเมื่อมีการแจ้งเตือนจะขึ้นจุดสีแสดงตรงเมนู 'แจ้งเตือน' -->
+                                </span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown" id="register"> <!-- id: register [ (nav-item): กำหนดให้เป็นองค์ประกอบที่อยู่ในเมนูบาร์, (dropdown): กำหนดให้เป็นองค์ประกอบแบบตัวเลือกลงมา ] -->
+                            <a class="nav-link active dropdown" id="dropdown" data-bs-toggle="dropdown">ลงทะเบียน</a> <!-- ปุ่มสำหรับเปิด-ปิดเมนูแบบตัวเลือกลงมา -->
+                            <ul class="dropdown-menu shadow-sm" aria-labelledby="dropdown">
+                                <li><a class="dropdown-item" href="/regisMember">บุคลากร</a></li> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'ลงทะเบียนบุคลากร' [ (dropdown-item): กำหนดให้เป็นองค์ประกอบที่อยู่เมนูแบบตัวเลือกลงมา ] -->
+                                <li><a class="dropdown-item" href="/regisEquipment">ครุภัณฑ์</a></li> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'ลงทะเบียนครุภัณฑ์' [ (dropdown-item): กำหนดให้เป็นองค์ประกอบที่อยู่เมนูแบบตัวเลือกลงมา ] -->
+                            </ul>
+                        </li>
+                        <% } %>
+                        <% if(role == "dpm"){ %> <!-- เงื่อนไขถ้า role เป็น 'dpm' จะทำการแสดงแค่เมนู แผนก -->
+                        <li class="nav-item" id="department"> <!-- id: department [ (nav-item): กำหนดให้เป็นองค์ประกอบที่อยู่ในเมนูบาร์ ] -->
+                            <a class="nav-link active" href="/department">แผนก</a> <!-- href: เมื่อกดจะสั่งไปยังหน้า 'แผนก' -->
+                        </li>
+                        <% } %>
+                    </ul>
+                    <div class="d-flex"> <!-- [ (d-flex): ปรับ layout ของพื้นที่นี้ให้อยู่ในแถวเดียวกับเมนูบาร์ ] -->
+                        <a class="btn btn-danger w-100 shadow-sm" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>ออกจากระบบ</a> <!-- href: เมื่อกดจะทำการออกจากระบบ [ (btn btn-danger w-100 shadow-sm): กำหนดให้เป็นปุ่มสีแดง ความกว้าง 100% และเพิ่มเงาของปุ่ม ] ส่วนของ (<i class="fas fa-sign-out-alt me-2"></i>): จะเป็น icon ของปุ่มออกจากระบบ -->
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--end navbar -->
+
+    <!--begin background cover image [ ส่วนของปกเว็บไซต์ ] -->
+    <div class="position-relative text-center bg-cover-image shadow-sm" style="height: 400px;"> <!-- style: กำหนดความสูงของ element เป็น 400px [ (position-relative): ปรับพื้นที่ให้กว้าง 100%, (text-center): กำหนดให้วัตถุอะไรที่อยู่ใน element นี้จะอยู่ตรงกลางเสมอ, (bg-cover-image): กำหนดให้พื้นหลังเป็นรูปที่สร้างไว้ในไฟล์ style.css, (shadow-sm): เพิ่มเงา ] -->
+        <div class="col-md-5"> <!-- กำหนดความกว้างของ column เป็น 5 (column ความกว้างของหน้าเว็บแบบ 100% คือ 12 ) -->
+            <div class="position-absolute top-50 start-50 translate-middle bg-white p-3 px-4 rounded-3 border border-5 border-secondary shadow-lg" style="min-width: 365px;"> <!-- [ (position-absolute top-50 start-50 translate-middle): ปรับให้ element นี้ตองอยูู่ตรงกลางเสมอ, (p-3 px-4): ปรับให้ element มีความกว้างภายในทุกด้านลดลง 16px และมีความกว้างภายในแนวแกน x ลดลง 24px, (rounded-3 border border-5 border-secondary): เพิ่มความโค้งของมุม กำหนดเส้นขอบให้มีความหนา 5px และเปลี่ยนเส้นขอบให้เป็นสีเทา, (shadow-sm): เพิ่มเงา ] -->
+                <h2 class="fst-italic me-2 my-3">ระบบยืม - คืนครุภัณฑ์ทางการแพทย์</h2> <!-- h2: คือการกำหนดขนาดของตัวอักษร [ (fst-italic): กำหนดให้ตัวหนังสือเอียง ] -->
+                <p class="fst-italic me-2" style="font-size: 17px;">ศูนย์การแพทย์สมเด็จพระเทพรัตนราชสุดา ฯ สยามบรมราชกุมารี </p> <!-- style: ปรับขนาดตัวหนังสือเป็น 17px [ (fst-italic): กำหนดให้ตัวหนังสือเอียง ] -->
+            </div>
+        </div>
+    </div>
+    <!--end background cover image -->
+
+    <!-- begin container [ ส่วนเปิดขององค์ประกอบที่อยุ่ด้านล่างปกของเว็บไซต์ ที่แต่ละหน้าจัดวางไม่เหมือนกัน ] -->
+    <div class="container-fluid my-3 px-3"> <!-- [ (container-fluid): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 100%, (my-3): ปรับความกว้างภายนอกในแนวแกน y เป็น 16px, (px-3) ปรับความกว้างภายในแนวแกน x ลดลง 16px ] -->
+        <!-- <div class="row"> -->

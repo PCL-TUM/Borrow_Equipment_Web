@@ -1,0 +1,537 @@
+<%- include('./template/header'); -%>   <!-- เรียกใช้ไฟล์ header -->
+<div class="container-xl">  <!-- [ (container-fluid): สร้างโครงสำหรับการวางองค์ประกอบของเว็บไซต์แบบกว้าง 100% -->
+    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+            <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                <div class="col-lg-12 text-end mb-3">   <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12, (text-center): จัดองค์ประกอบให้อยู่ทางขวา -->
+                    <div class="btn btn-primary shadow-sm" id="add_NewEquipment"><i class="fas fa-plus me-2"></i>เพิ่มข้อมูลครุภัณฑ์</div> <!-- สร้างปุ่ม 'เพิ่มข้อมูลครุภัณฑ์' มี id=add_NewEquipment มีเงาและหลังสีนำเงิน / (<i class="fas fa-plus me-2"></i>):เป็น icon เครื่องหมายบวก -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+            <div class="card shadow-sm mb-3 collapse" id="equipmentForm">   <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px มี id=equipmentForm -->
+                <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                        <div class="col-lg-6">      <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                            <h5 class="pt-2">ข้อมูลครุภัณฑ์</h5> <!-- tag สร้างข้อความ ' ข้อมูลครุภัณฑ์ ' -->
+                        </div>
+                    </div>
+                    <hr class="mb-4">   <!-- tag สร้างเส้นตรง -->
+                    <div class="row mx-5" id="equipment_validate">  <!-- (row): ขึ้นบรรทัดใหม่, มี id=equipment_validate -->
+                        <div class="col-lg-8">  <!-- (col-lg-8): กำหนด column เป็น 8 จาก 12 -->
+                            <div class="row mb-3">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <label class="form-label">รหัส RFID </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รหัส RFID ' -->
+                                    <div class="input-group">   <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                        <input type="text" class="form-control shadow-sm rounded-3 me-2" id="equipment_rfid" maxlength="10" required>   <!-- สร้างกล่องกรอกข้อความ มี id=equipment_rfid และ จำกัดข้อความสูงสุด 10 ตัวอักษร -->
+                                        <div class="btn btn-warning shadow-sm rounded-3" id="clear_rfid">เคลียร์ Tag</div>    <!-- สร้างปุ่ม 'เคลียร์ Tag' มี id=equipment_clear มีเงาและหลังสีเหลือง -->
+                                        <div class="invalid-feedback">  
+                                            กรุณาระบุ รหัส RFID            <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <label class="form-label">ชื่อครุภัณฑ์ </label>  <!-- สร้างชื่อของกล่องกรอกข้อความ : 'ชื่อครุภัณฑ์' -->
+                                    <input type="text" class="form-control shadow-sm rounded-3" id="equipment_name" required>   <!-- สร้างกล่องกรอกข้อความ มี id=equipment_name -->
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ ชื่อครุภัณฑ์                <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                        <div class="col-lg-6 mb-3"> <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                                            <label class="form-label">เลขครุภัณฑ์ </label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'เลขครุภัณฑ์' -->
+                                            <input type="text" class="form-control shadow-sm rounded-3" id="equipment_number" required> <!-- สร้างกล่องกรอกข้อความ มี id=equipment_number -->
+                                            <div class="invalid-feedback">
+                                                กรุณาระบุ เลขครุภัณฑ์        <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-3"> <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                                            <label class="form-label">Serial Number </label>    <!-- สร้างชื่อของกล่องกรอกข้อความ : 'Serial Number' -->
+                                            <input type="text" class="form-control shadow-sm rounded-3" id="equipment_sn" required> <!-- สร้างกล่องกรอกข้อความ มี id=equipment_sn -->
+                                            <div class="invalid-feedback">
+                                                กรุณาระบุ Serial Number   <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <div class="row">    <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                        <div class="col-lg-6 mb-3"> <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                                            <label class="form-label">ยี่ห้อ </label>  <!-- สร้างชื่อของกล่องกรอกข้อความ : 'ยี่ห้อ' -->
+                                            <input type="text" class="form-control shadow-sm rounded-3" id="equipment_brand" required>  <!-- สร้างกล่องกรอกข้อความ มี id=equipment_brand -->
+                                            <div class="invalid-feedback">
+                                                กรุณาระบุ ยี่ห้อ         <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-3"> <!-- (col-lg-6): กำหนด column เป็น 6 จาก 12 -->
+                                            <label class="form-label">รุ่น </label>   <!-- สร้างชื่อของกล่องกรอกข้อความ : 'รุ่น' -->
+                                            <input type="text" class="form-control shadow-sm rounded-3" id="equipment_model" required>  <!-- สร้างกล่องกรอกข้อความ มี id=equipment_model -->
+                                            <div class="invalid-feedback">
+                                                กรุณาระบุ รุ่น          <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-lg-4">  <!-- (col-lg-4): กำหนด column เป็น 4 จาก 12 -->
+                            <div class="row mb-3">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                                <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+                                    <label for="" class="form-label">คำอธิบาย</label> <!-- สร้างชื่อของกล่องกรอกข้อความ : 'คำอธิบาย' -->
+                                    <textarea class="form-control shadow-sm" id="equipment_description" rows="5" style="height: 296px;" required></textarea>    <!-- สร้างกล่องกรอกข้อความ มี id=equipment_description -->
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ คำอธิบาย          <!-- ข้อความสำหรับแจ้งเตื่อน เมื่อไม่กรอกข้อมูลในฟอร์ม -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-3">   <!-- tag สร้างเส้นตรง -->
+                    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+                        <div class="col-lg-12 text-end">    <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12, (text-center): จัดองค์ประกอบให้อยู่ทางขวา -->
+                            <div class="btn btn-outline-secondary shadow-sm" id="cancel_addEquipment"><i class="fas fa-times me-2"></i>ยกเลิก</div>  <!-- สร้างปุ่ม 'ยกเลิก' มี id=cancel_addEquipment มีเงาและหลังสีใสกรอบสีเทา / (<i class="fas fa-times me-2"></i>):เป็น icon กากบาท -->
+                            <div class="btn btn-success shadow-sm" id="submit_addEquipment"><i class="fas fa-save me-2"></i>บันทึก</div>  <!-- สร้างปุ่ม 'บันทึก' มี id=submit_addEquipment มีเงาและพื้นหลังสีเขียว / (<i class="fas fa-check me-2"></i>):เป็น icon แผ่นดิสก์ -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">   <!-- (row): ขึ้นบรรทัดใหม่ -->
+        <div class="col-lg-12"> <!-- (col-lg-12): กำหนด column เป็น 12 จาก 12 -->
+            <div class="card shadow-sm mb-3">   <!-- (card): สร้าง element ในรูปแบบการ์ด, (shadow-sm): เพิ่มเงา, (mb-3): ปรับระยะห่างภายนอกด้านล่าง 16px -->
+                <div class="card-body"> <!-- (card-body): กำหนดส่วนเนื้อหน้าของการ์ด -->
+                    <div class="row mb-2">  <!-- (row): ขึ้นบรรทัดใหม่ -->
+                        <div class="col-lg-7">  <!-- (col-lg-7): กำหนด column เป็น 7 จาก 12 -->
+                            <h5 class="pt-2">ตารางข้อมูลครุภัณฑ์</h5>    <!-- tag สร้างข้อความ ' ตารางข้อมูลครุภัณฑ์ ' -->
+                        </div>
+                        <div class="col-lg-5 text-end"> <!-- (col-lg-5): กำหนด column เป็น 5 จาก 12, (text-center): จัดองค์ประกอบให้อยู่ทางขวา -->
+                            <div class="input-group mb-1">  <!-- สร้างกลุ่มของฟอร์มกล่องข้อความ -->
+                                <input type="text" class="form-control me-2 shadow-sm rounded-3" id="equipmentSearch" placeholder="ชื่อครุภัณฑ์, เลขครุภัณฑ์, ยี่ห้อ"> <!-- สร้างกล่องกรอกข้อความ มี id=equipmentSearch และมีลายน้ำในกล่องเป็น ' ชื่อครุภัณฑ์, เลขครุภัณฑ์, ยี่ห้อ ' -->
+                                <div class="btn btn-secondary shadow-sm rounded-3" id="search"><i class="fas fa-search me-2"></i>ค้นหา</div> <!-- สร้างปุ่ม 'ค้นหา' มี id=search มีเงาและพื้นหลังสีเขียว / (<i class="fas fa-search me-2"></i>):เป็น icon แว่นขยาย -->
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="mb-4">   <!-- tag สร้างเส้นตรง -->
+
+                    <table class=" display nowrap mb-3" id="table_id">  <!-- สร้างตาราง ที่มี id= table_id (display nowrap): กำหนดให้สิ่งที่มีความยาวเกิน element นี้จะถูกซ่อนอยู่เบื่องหลัง, (mt-1 mb-3): ปรับระยะห่างภายนอกด้านบน 4px และด้านล่าง 16px -->
+                        <thead class="table-navy-blue"> <!-- (table-navy-blue): กำหนดให้แถบคอลัมน์เป็นสีกรม  -->
+                            <tr>    <!-- tag สำหรับกำหนดคอลัมน์ -->
+                                <th class="text-center">ลำดับ</th>    <!-- กำหนดชื่อคอลัมน์เป็น 'ลำดับ' -->
+                                <th class="text-center">รหัส RFID</th>   <!-- กำหนดชื่อคอลัมน์เป็น 'รหัส RFID' -->
+                                <th class="text-center">S/N</th>    <!-- กำหนดชื่อคอลัมน์เป็น 'S/N' -->
+                                <th class="text-center">เลขครุภัณฑ์</th>   <!-- กำหนดชื่อคอลัมน์เป็น 'เลขครุภัณฑ์' -->
+                                <th class="text-center">ชื่อครุภัณฑ์</th>    <!-- กำหนดชื่อคอลัมน์เป็น 'ชื่อครุภัณฑ์' -->
+                                <th class="text-center">ยี่ห้อ</th>    <!-- กำหนดชื่อคอลัมน์เป็น 'ยี่ห้อ' -->
+                                <th class="text-center">รุ่น</th>    <!-- กำหนดชื่อคอลัมน์เป็น 'รุ่น' -->
+                                <th class="text-center">จัดการข้อมูล</th>  <!-- กำหนดชื่อคอลัมน์เป็น 'จัดการข้อมูล' -->
+                            </tr>
+                        </thead>
+                        <tbody> <!-- tag สำหรับกำหนดข้อมูลในตาราง -->
+                            
+                        </tbody>
+                    </table>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('./template/footer'); -%>   <!-- เรียกใช้ไฟล์ footer -->
+
+<script>
+    var Feature = (function(){
+        var countOrder = 0; // ตัวแปรในการสร้างลำดับข้อมูลในตาราง
+        
+        var aaRfid = "";    // ตัวแปรในการค้นหาข้อมูล RFID 
+        var aaSearch = "";  // ตัวแปรในการค้นหาข้อมูลในตาราง
+
+        var id_update = 0;  // ตัวแปรเก็บค่า id ครุภัณฑ์เพื่อกำหนดสถานะข้อมูล สำหรับ แก้ไข
+        var id_remove = 0;  // ตัวแปรเก็บค่า id ครุภัณฑ์เพื่อกำหนดสถานะข้อมูล สำหรับ ลบ
+
+        var user = JSON.parse('<%- JSON.stringify(udt) %>');
+            user = user.id; // ช้อมูล id ของ User
+
+        var dataTable = $('#table_id').DataTable({
+            language: {emptyTable: "ไม่พบข้อมูลครุภัณฑ์", info: "แสดงข้อมูลครุภัณฑ์ _TOTAL_ รายการ", infoEmpty: "ไม่พบข้อมูล"},   // กำหนดข้อความแสดงในตารางและจำนวนข้อมูลเมื่อ ' ไม่พบข้อมูลครุภัณฑ์ '
+            searching: false,   // ปิดฟอร์มค้นหาข้อมูลในตารางของ library
+            initComplete: function (settings, json) {  // กำหนดส่วนเสริมของตารางข้อมูล
+                $("#table_id").wrap("<div style='overflow:auto; width:100%; position:relative; max-height: 775px; margin-bottom: 5px;'></div> ");  // กำหนด style ของตารางข้อมูล (overflow:auto): ปรับไม่ให้เวลาย่อตารางข้อมูลแล้วตัวหนังสือตกบรรทัด, (width:100%): ปรับความกว่างเป็น 100%, (position:relative): ปรับการแสดงข้อมูลในตำแหน่งคงที่, (max-height): ปรับความยาวสูงสุดของตารางเป็น 708px (ปล.จะแสดงข้อมูล 1-10 แล้วที่เหลือจะเป็น scollBar แบบเลื่อนขึ้นลง), (margin-bottom): ปรับความสูงภายนอกด้างล่าง 5px:          
+            },
+            ordering: false,        // ปิดการจัดเรียงข้อมูล
+            lengthChange: false,    // ปิดการจำกัดจำนวนข้อมูล
+            paging: false,          // ปิดตัวแสดงลำดับหน้าของตาราง
+            bAutoWidth: false,      // ปิดการจัดเรียงความกว้างข้อมูล
+            columns:[               // ส่วนของการ loop นำข้อมูลมาใส่ในตาราง
+                        { 
+                            data: function (data) {
+                                countOrder++                        // เมื่อมีข้อมูล ตัวแปร countOrder จะมีค่าเพิ่มขึ้นทีละ 1
+                                return countOrder;                  // ข้อมูล ' ลำดับ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['rfid'];                // ข้อมูล ' รหัส RFID '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['serial_number'];       // ข้อมูล ' รหัสพนักงาน '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['equipment_number'];    // ข้อมูล ' ลำดับ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['equipment_name'];      // ข้อมูล ' ชื่อ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['brand'];               // ข้อมูล ' เพศ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                return data['model'];               // ข้อมูล ' เบอร์โทรศัพท์ '
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                        { 
+                            data: function (data) {
+                                var setButton = ""
+                                    setButton = '<a class="btn btn-danger btn-sm shadow-sm" name="delete_data" data-id="' + data['id'] + '"><i class="fas fa-trash me-2"></i>ลบ</a>\
+                                                 <a class="btn btn-warning btn-sm shadow-sm" name="edit_data"\
+                                                    data-id="' + data['id'] + '" data-rfid="' + data['rfid'] + '" data-serial_number="' + data['serial_number'] + '"\
+                                                    data-equipment_number="' + data['equipment_number'] + '" data-equipment_name="' + data['equipment_name'] + '"\
+                                                    data-brand="' + data['brand'] + '"data-model="' + data['model'] + '"data-description="' + data['description'] + '">\
+                                                 <i class="fas fa-pen me-2"></i>แก้ไข</a>'; 
+                                return setButton;                   // ปุ่ม ลบและแก้ไข
+                            },
+                            className : 'text-center',              // จัดให้ข้อมูลอยู่ตรงกลาง
+                        },
+                    ],
+            serverSide: true,   // เปิดการรับ - ส่งข้อมูลของตาราง
+            ajaxSource: '/regisEquipment/search',   // path สำหรับการรับ - ส่งข้อมูล (service)
+            serverData: function (sSource, aaData, fnCallback, oSettings) { // สร้าง function สำหรับการรับ - ส่งข้อมูล
+                aaData.push({ "name": "rfid", "value": aaRfid});     // กำหนดข้อมูล RFID ที่จะค้นหา
+                aaData.push({ "name": "search", "value": aaSearch});     // กำหนดข้อมูลที่จะค้นหา
+                oSettings.jqXHR = $.ajax({  // รับ - ส่งข้อมูลโดยใช้ ajax
+                    dataType: 'json',       // กำหนดรูปแบบข้อมูลเป็น json
+                    type: "POST",           // กำหนดประเภทการส่งแบบ POST
+                    url: sSource,           // path สำหรับการรับ - ส่งข้อมูล (ajaxSource)
+                    data: aaData,           // ข้อมูลที่ส่ง 
+                    success: function (response) {  // ถ้าติดต่อสำเร็จ
+                        if (response.status === "Succeed") {    // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'
+                            if (response.data === "No Reverting information") { // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed' แต่ data เป็นคำว่า 'No Reverting information' คือไม่มีข้อมูลครุภัณฑ์
+                                response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0};    // จัดเรียงข้อมูลที่ได้รับใหม่
+                            } else {
+                                var response = response.data;
+                                    response = {"aaData": response, "iTotalRecords": response.length, "iTotalDisplayRecords": response.length}; // จัดเรียงข้อมูลที่ได้รับใหม่
+                            }
+                        } else {
+                            response = {"aaData":[], "iTotalRecords": 0, "iTotalDisplayRecords": 0};    // จัดเรียงข้อมูลที่ได้รับใหม่
+                        }
+                      
+                        fnCallback(response);   // นำข้อมูลกลับขึ้นไป loop ใน columns
+
+                    }
+                });
+            },
+            createdRow: function (row, data, index) {   // ส่วนของการเขียน dom แต่ไม่ได้ใช้ (T-T)
+            }
+        });
+
+        return {
+            searchData: function () {   // function searchData : สำหรับการค้นหาข้อมูล
+                $('#search').on('click', function (e) {     // เมื่อกดปุ่ม element ที่มี id = search จะทำงาน (ปุ่มค้นหา)
+                    var equipmentSearch = $('#equipmentSearch').val();  // รับข้อมูลจากกล่องกรอกข้อความที่มี id= equipmentSearch มาเก็บไว้ในตัวแปร equipmentSearch
+                        aaSearch = equipmentSearch.trim();              // กำหนดให้ตัวแปร aaSearch เก็บค่า ตัวแปร equipmentSearch และ (.trim) ทำการตัดคำว่างออก
+                        countOrder = 0;                                 // กำหนดให้ตัวแปร countOrder เป็น 0 เพื่อจัดเรียงข้อมูลในตารางใหม่
+                        dataTable.ajax.reload();                        // สั่งให้ตารางข้อมูลทำการ รับ - ส่งข้อมูลใหม่อีกครั้ง
+                });
+            },
+            initButton: function () {   // function initInput : สำหรับการรับข้อมูลในฟอร์ม
+                // in dataTable
+                $('#table_id').on('click', '[name="edit_data"]', function () {  // ปุ่ม 'แก้ไข' ของข้อมูลครุภัณฑ์ในแถวตารางข้อมูล
+                    var data = $(this).data();  // รับข้อมูลจากปุ่มแก้ไข ที่กดในแถวตารางข้อมูล
+                        if ($('#equipmentForm').is('.collapse:not(.show)')) { // ถ้าฟอร์มของข้อมูลครุภัณฑ์ไม่ได้แสดง
+                            $('#equipmentForm').collapse("toggle"); //แสดงฟอร์มข้อมูลครุภัณฑ์
+                        }
+                            // set value
+                            id_update = data.id;                                // เก็บข้อมูล id ของข้อมูลครุภัณฑ์
+                            $('#equipment_rfid').val(data.rfid);                // นำข้อมูล response ของรหัส RFID มาใส่ในฟอร์ม 'รหัส RFID' ข้อมูลครุภัณฑ์
+                            $('#equipment_name').val(data.equipment_name);      // นำข้อมูล response ของชื่อครุภัณฑ์ มาใส่ในฟอร์ม 'ชื่อครุภัณฑ์' ข้อมูลครุภัณฑ์
+                            $('#equipment_number').val(data.equipment_number);  // นำข้อมูล response ของเลขครุภัณฑ์ มาใส่ในฟอร์ม 'เลขครุภัณฑ์' ข้อมูลครุภัณฑ์
+                            $('#equipment_sn').val(data.serial_number);         // นำข้อมูล response ของ Serial Number มาใส่ในฟอร์ม 'Serial Number' ข้อมูลครุภัณฑ์
+                            $('#equipment_brand').val(data.brand);              // นำข้อมูล response ของยี่ห้อมาใส่ในฟอร์ม 'ยี่ห้อ' ข้อมูลครุภัณฑ์
+                            $('#equipment_model').val(data.model);              // นำข้อมูล response ของรุ่น มาใส่ในฟอร์ม 'รุ่น' ข้อมูลครุภัณฑ์
+                            $('#equipment_description').val(data.description);  // นำข้อมูล response ของคำอธิบาย มาใส่ในฟอร์ม 'คำอธิบาย' ข้อมูลครุภัณฑ์
+                });
+                $('#table_id').on('click', '[name="delete_data"]', function () {    // ปุ่ม 'ลบ' ของข้อมูลครุภัณฑ์ในแถวตารางข้อมูล
+                    var data = $(this).data();  // รับข้อมูลจากปุ่มแก้ไข ที่กดในแถวตารางข้อมูล
+                        id_remove = data.id;    // เก็บข้อมูล id ของข้อมูลครุภัณฑ์
+                        Swal.fire ({                                                //
+                                icon: 'warning',                                    //
+                                title: 'กรุณายืนยันการลบ',                            //
+                                text: 'เมื่อกด "ยืนยัน" ระบบจะทำการลบข้อมูลครุภัณฑ์',      //  >> แสดงป้อปอัพ แจ้งเตือน
+                                showCancelButton: true,                            //
+                                confirmButtonText: "ยืนยัน",                         //
+                                cancelButtonText: "ยกเลิก",                         //
+                            }) .then((result) => {                                 
+                            if (result.isConfirmed) {                              // เมื่อกดปุ่ม ยืนยัน
+                                Feature.submitRemoveEquipment();                   // ทำงาน function submitRemoveEquipment
+                            } else {                                               // เมื่อกดปุ่ม ยกเลิก
+                                swal.close()                                       // ปิดป้อปอัพ
+                            }
+                        });
+                });
+                // add new equipment
+                $('#add_NewEquipment').on('click', function (e) {   // ปุ่ม 'เพิ่มข้อมูลครุภัณฑ์'
+                    if ($('#equipmentForm').is('.collapse:not(.show)')) { // ถ้าฟอร์มของข้อมูลครุภัณฑ์ไม่ได้แสดง
+                        $('#equipmentForm').collapse("toggle"); //แสดงฟอร์มข้อมูลครุภัณฑ์
+                    }
+                        id_update = 0;                              // กำหนด id ของข้อมูลครุภัณฑ์ = 0
+                        // clear value
+                        $('#equipment_rfid').val('');               // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                        $('#equipment_name').val('');               // ทำให้ฟอร์ม 'ชื่อครุภัณฑ์' ว่าง
+                        $('#equipment_number').val('');             // ทำให้ฟอร์ม 'เลขครุภัณฑ์' ว่าง
+                        $('#equipment_sn').val('');                 // ทำให้ฟอร์ม 'Serial Number' ว่าง
+                        $('#equipment_brand').val('');              // ทำให้ฟอร์ม 'ยี่ห้อ' ว่าง
+                        $('#equipment_model').val('');              // ทำให้ฟอร์ม 'รุ่น' ว่าง
+                        $('#equipment_description').val('');        // ทำให้ฟอร์ม 'คำอธิบาย' ว่าง
+                });
+                // in form 
+                $('#submit_addEquipment').on('click', function (e) {   // ปุ่ม 'บันทึก'
+                    if ($('#equipment_rfid').val() != "" && $('#equipment_name').val() != "" && $('#equipment_number').val() != "" && $('#equipment_sn').val() != "" && $('#equipment_brand').val() != "" && $('#equipment_model').val() != "" && $('#equipment_description').val() != "") { // ตรวจสอบข้อมูลในฟอร์มของข้อมูลครุภัณฑ์ ต้องไม่ว่าง
+                        if (id_update == 0) {                   // ถ้า id = 0 กำหนดเป็นการเพิ่มข้อมูลครุภัณฑ์
+                            Feature.submitAddEquipment();       // ทำงาน function submitAddEquipment
+                        } 
+                        else if (id_update > 0) {               // ถ้า id ไม่เป็น 0 กำหนดเป็นการแก้ไขข้อมูลครุภัณฑ์
+                            Feature.submitUpdateEquipment();    // ทำงาน function submitUpdateEquipment
+                        }
+                    } else {    // ถ้าฟอร์มกรอกข้อมูล ว่าง  
+                        $("#equipment_validate").addClass("was-validated"); // เพิ่ม Class : was-validated ใน Class :equipment_validate
+                    }
+                });
+                $('#cancel_addEquipment').on('click', function (e) {    // ปุ่ม 'ยกเลิก'
+                    if ($('#equipmentForm').is('.collapse.show')) {     // ถ้าฟอร์มของข้อมูลครุภัณฑ์แสดง
+                            $("#equipment_validate").removeClass("was-validated");  // ลบ Class : was-validated ใน Class :equipment_validate
+                            $('#equipmentForm').collapse("toggle");     // ซ่อนฟอร์มข้อมูลครุภัณฑ์
+                    }
+                        // clear value
+                        $('#equipment_rfid').val('');               // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                        $('#equipment_name').val('');               // ทำให้ฟอร์ม 'ชื่อครุภัณฑ์' ว่าง
+                        $('#equipment_number').val('');             // ทำให้ฟอร์ม 'เลขครุภัณฑ์' ว่าง
+                        $('#equipment_sn').val('');                 // ทำให้ฟอร์ม 'Serial Number' ว่าง
+                        $('#equipment_brand').val('');              // ทำให้ฟอร์ม 'ยี่ห้อ' ว่าง
+                        $('#equipment_model').val('');              // ทำให้ฟอร์ม 'รุ่น' ว่าง
+                        $('#equipment_description').val('');        // ทำให้ฟอร์ม 'คำอธิบาย' ว่าง
+                });
+                $('#clear_rfid').on('click', function (e) {     // ปุ่ม 'เคลียร์ Tag'
+                    $('#equipment_rfid').val('');               // ทำให้ฟอร์ม 'รหัส RFID' ว่าง
+                });
+            },
+            submitAddEquipment: function () {   // function submitAddEquipment : สำหรับการส่งข้อมูลเพื่อเพิ่มข้อมูลครุภัณฑ์
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;                                                                          //
+
+                var url = '/regisEquipment/PostRegisterEquip';  // path ส่งข้อมูล 'บันทึกข้อมูลครุภัณฑ์' (service)
+                    $.ajax({                                    // รับ - ส่งข้อมูลโดยใช้ ajax
+                            type: 'POST',                       // กำหนดประเภทการส่งแบบ POST
+                            url: url,                           // path ส่งข้อมูล 'บันทึกข้อมูลครุภัณฑ์' (service)
+                            data: { 
+                                    rfid : $('#equipment_rfid').val(),                  // ข้อมูล รหัส RFID ของครุภัณฑ์
+                                    equipment_name : $('#equipment_name').val(),        // ข้อมูล ชื่อครุภัณฑ์ ของครุภัณฑ์
+                                    brand : $('#equipment_brand').val(),                // ข้อมูล ยี่ห้อ ของครุภัณฑ์
+                                    model : $('#equipment_model').val(),                // ข้อมูล รุ่น ของครุภัณฑ์
+                                    equipment_number : $('#equipment_number').val(),    // ข้อมูล เลขครุภัณฑ์ ของครุภัณฑ์
+                                    serial_number : $('#equipment_sn').val(),           // ข้อมูล Serial Number ของครุภัณฑ์
+                                    description : $('#equipment_description').val(),    // ข้อมูล คำอธิบาย ของครุภัณฑ์
+                                    datetime : dateNow,                                 // ข้อมูล วันที่และเวลา ปัจจุบัน ของครุภัณฑ์
+                                    create_by : user                                    // ช้อมูล id ของ User
+                                  } 
+                                  
+                        })
+                    .done(function(response) {  // ถ้าติดต่อสำเร็จ
+                        if (response.status == "Succeed") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                            Swal.fire({                                         //
+                                title: "สำเร็จ",                                  //
+                                text: "บันทึกข้อมูลการเพิ่มข้อมูลครุภัณฑ์สำเร็จ",         //  >> แสดงป้อปอัพ แจ้งเตื่อน
+                                icon: "success",                                //
+                                confirmButtonText: "ตกลง",                     //
+                            }).then((result) => {
+                                if (result.isConfirmed) {                       //  เมื่อกดปุ่ม ตกลง
+                                    window.location.reload();                   //  รีโหลดหน้าเว็บไซต์
+                                }
+                            });
+                            
+                        } else if (response.status == "Failed") {   // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed'  
+                            var response = response.data;
+                            if (response.DuplicateData == "rfid" ){ 
+                                    Swal.fire({                                                 //
+                                        title: "ผิดพลาด",                                       //
+                                        text: "ไม่สามารถบันทึกได้ เนื่องจากมีรหัส RFID นี้แล้วในระบบ ",    //  >> แสดงป้อปอัพ แจ้งเตื่อน
+                                        icon: "error",                                          //
+                                        confirmButtonText: "ตกลง",                              //
+                                    });
+                                }
+                                else if (response.DuplicateData == "equipment_number" ){
+                                    Swal.fire({                                                      //
+                                        title: "ผิดพลาด",                                            //
+                                        text: "ไม่สามารถบันทึกได้ เนื่องจากมี 'รหัสครุภัณฑ์' นี้แล้วในระบบ ",    //   >> แสดงป้อปอัพ แจ้งเตื่อน
+                                        icon: "error",                                              //
+                                        confirmButtonText: "ตกลง",                                  //
+                                    });
+                                }
+                                else if (response.DuplicateData == "serial_number" ){
+                                    Swal.fire({                                                          //
+                                        title: "ผิดพลาด",                                                //
+                                        text: "ไม่สามารถบันทึกได้ เนื่องจากมี 'Serial Number' นี้แล้วในระบบ ",    //  >> แสดงป้อปอัพ แจ้งเตื่อน
+                                        icon: "error",                                                  //
+                                        confirmButtonText: "ตกลง",                                      //
+                                    });
+                                }
+                        }
+                    });
+            },
+            submitUpdateEquipment: function () {    // function submitUpdateEquipment : สำหรับการส่งข้อมูลเพื่อแก้ไขข้อมูลครุภัณฑ์
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;                                                                          //
+
+                var url = '/regisEquipment/PostEditEquip';  // path ส่งข้อมูล 'บันทึกข้อมูลครุภัณฑ์' (service)
+                    $.ajax({                                // รับ - ส่งข้อมูลโดยใช้ ajax
+                            type: 'POST',                   // กำหนดประเภทการส่งแบบ POST
+                            url: url,                       // path ส่งข้อมูล 'บันทึกข้อมูลครุภัณฑ์' (service)
+                            data: { 
+                                    id : id_update,                                             // ช้อมูล id ของครุภัณฑ์
+                                    rfid : $('#equipment_rfid').val(),                          // ข้อมูล รหัส RFID ของครุภัณฑ์
+                                    equipment_name : $('#equipment_name').val(),                // ข้อมูล ชื่อครุภัณฑ์ ของครุภัณฑ์
+                                    brand : $('#equipment_brand').val(),                        // ข้อมูล ยี่ห้อ ของครุภัณฑ์
+                                    model : $('#equipment_model').val(),                        // ข้อมูล รุ่น ของครุภัณฑ์
+                                    equipment_number : $('#equipment_number').val(),            // ข้อมูล เลขครุภัณฑ์ ของครุภัณฑ์
+                                    serial_number : $('#equipment_sn').val(),                   // ข้อมูล Serial Number ของครุภัณฑ์
+                                    description : $('#equipment_description').val(),            // ข้อมูล คำอธิบาย ของครุภัณฑ์
+                                    datetime : dateNow,                                         // ข้อมูล วันที่และเวลา ปัจจุบัน ของครุภัณฑ์
+                                    update_by : user                                            // ช้อมูล id ของ User
+                                  } 
+                        })
+                    .done(function(response) {
+                        if (response.status == "Succeed") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                            Swal.fire({                                         //
+                                title: "สำเร็จ",                                  //
+                                text: "บันทึกข้อมูลการแก้ไขข้อมูลครุภัณฑ์สำเร็จ",        // >> แสดงป้อปอัพ แจ้งเตื่อน
+                                icon: "success",                                //
+                                confirmButtonText: "ตกลง",                      //
+                            }).then((result) => {
+                                if (result.isConfirmed) {                       //  เมื่อกดปุ่ม ตกลง
+                                    window.location.reload();                   //  รีโหลดหน้าเว็บไซต์
+                                }
+                            });
+                            
+                        } else if (response.status == "Failed") {   // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed'  
+                            var response = response.data;
+                            if (response.DuplicateData == "rfid" ){
+                                    Swal.fire({                                                  //
+                                        title: "ผิดพลาด",                                        //
+                                        text: "ไม่สามารถบันทึกได้ เนื่องจากมีรหัส RFID นี้แล้วในระบบ ",    // >> แสดงป้อปอัพ แจ้งเตื่อน
+                                        icon: "error",                                          //
+                                        confirmButtonText: "ตกลง",                              //
+                                    });
+                                }
+                                else if (response.DuplicateData == "equipment_number" ){
+                                    Swal.fire({                                                          //
+                                        title: "ผิดพลาด",                                                //
+                                        text: "ไม่สามารถบันทึกได้ เนื่องจากมี 'รหัสครุภัณฑ์' นี้แล้วในระบบ ",        //   >> แสดงป้อปอัพ แจ้งเตื่อน
+                                        icon: "error",                                                  //
+                                        confirmButtonText: "ตกลง",                                      //
+                                    });
+                                }
+                                else if (response.DuplicateData == "serial_number" ){
+                                    Swal.fire({                                                                  //
+                                        title: "ผิดพลาด",                                                        //
+                                        text: "ไม่สามารถบันทึกได้ เนื่องจากมี 'Serial Number' นี้แล้วในระบบ ",            //  >> แสดงป้อปอัพ แจ้งเตื่อน
+                                        icon: "error",                                                          //
+                                        confirmButtonText: "ตกลง",                                              //
+                                    });
+                                }
+                        }
+                    });
+            },
+            submitRemoveEquipment: function () { // function submitRemoveEquipment : สำหรับการส่งข้อมูลเพื่อลบข้อมูลครุภัณฑ์
+                const now = new Date();                                                                     //
+                const offsetMs = now.getTimezoneOffset() * 60 * 1000;                                       //
+                const dateLocal = new Date(now.getTime() - offsetMs);                                       //  >> รับค่าวันที่และเวลา ปัจจุบัน
+                const str = dateLocal.toISOString().slice(0, 19).replace(/-/g, "/").replace("T", " ");      //
+                    dateNow = str;                                                                          //
+
+                var url = '/regisEquipment/PostDeleteEquip';    // path ส่งข้อมูล 'บันทึกข้อมูลครุภัณฑ์' (service)
+                    $.ajax({                                    // รับ - ส่งข้อมูลโดยใช้ ajax
+                        type: 'POST',                           // กำหนดประเภทการส่งแบบ POST
+                        url: url,                               // path ส่งข้อมูล 'บันทึกข้อมูลครุภัณฑ์' (service)
+                            data: { 
+                                    id : id_remove,             // ช้อมูล id ของ ของครุภัณฑ์
+                                    datetime : dateNow          // ข้อมูล วันที่และเวลา ปัจจุบัน ของครุภัณฑ์
+                                  } 
+                        })
+                    .done(function(response) {
+                        if (response.status == "Succeed") {     // ถ้าได้รับ response กลับมาเป็นคำว่า 'Succeed'  
+                            Swal.fire({                                    //
+                                title: "สำเร็จ",                             //
+                                text: "บันทึกข้อมูลการลบข้อมูลครุภัณฑ์สำเร็จ",     // >> แสดงป้อปอัพ แจ้งเตื่อน
+                                icon: "success",                           //
+                                confirmButtonText: "ตกลง",                 //
+                            }).then((result) => {
+                                if (result.isConfirmed) {                   //  เมื่อกดปุ่ม ตกลง
+                                    window.location.reload();               //  รีโหลดหน้าเว็บไซต์
+                                }
+                            });
+                            
+                        } else if (response.status == "Failed") {   // ถ้าได้รับ response กลับมาเป็นคำว่า 'Failed'  
+                            Swal.fire({                                                      //
+                                title: "ผิดพลาด",                                            //
+                                text: "ไม่สามารถบันทึกการลบข้อมูลครุภัณฑ์ได้ กรุณาลองใหม่อีกครั้ง ",    //    >> แสดงป้อปอัพ แจ้งเตื่อน
+                                icon: "error",                                               //
+                                confirmButtonText: "ตกลง",                                  //
+                            });
+                        }
+                    });
+            },
+            init: function () {     // function init : เป็น function ที่รวม function ที่ต้องการเรียกใช้งานเมื่อเริ่มเว็บไซต์
+                Feature.searchData();   // สำหรับการค้นหาข้อมูล
+                Feature.initButton();   // สำหรับการทำงานของปุ่ม
+            }
+        }
+    })();
+  
+    jQuery(document).ready(function () {
+      Feature.init();   // เรียกใช้ function เมื่อเริ่มเว็บไซต์
+      
+    });  
+</script>

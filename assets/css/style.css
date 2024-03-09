@@ -1,0 +1,106 @@
+/* dropdown */
+.dropdown-menu {
+    gap: .25rem;
+    padding: .5rem;
+    border-radius: .5rem;
+ }
+.dropdown:hover .dropdown-menu  {
+    display: block;
+    margin-top: 2px;
+}
+.dropdown-menu .dropdown-item {
+    border-radius: .25rem;
+}
+/* form input */
+.form-control:disabled, .form-select:disabled, .form-control[readonly] {
+    background-color: #ffffff;
+    opacity: 1;
+}
+/* navbar */
+.nav-item {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.nav-link:hover {
+    border-radius: .5rem;
+    background-color: rgba(61, 61, 61, 0.342);
+}
+.navbar-nav .nav-link {
+    padding-left: 10px;
+}
+
+/* card */
+.card {
+    border-radius: .5rem;
+}
+
+/* background-color */
+.bg-navy-blue {
+    background-color: #0D3B66;
+    color: #fff;
+}
+.bg-danger {
+    background-color: #fb402f !important;
+}
+
+.bg-cover-image {
+    background: url(/assets/images/bg_image.png);
+}
+
+/* button */
+.btn-danger { color: #fff; background-color: #fb402f; border-color: #fb402f; } .btn-danger:hover { color: #fff; background-color: #ad3823; border-color: #ad3823; }
+.btn-success { color: #fff; background-color: #0fae00; border-color: #0fae00; } .btn-success:hover { color: #fff; background-color: #0c8601; border-color: #0c8601; }
+.btn-outline-secondary { color: #6c757d; background-color: #ffffff; border-color: #6c757d; }
+
+/* table */
+.table-navy-blue {
+    background-color: #174d84;
+    color: #fff;
+}
+table.dataTable >thead >tr >th {
+    border-bottom-width: 0;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 15px 15px;
+    vertical-align: middle;
+    padding-left: 18px;
+    text-align: center;
+}
+table.dataTable >tbody td {
+    padding: 20px 15px 20px 15px;
+    color: #444444;
+    font-size: 16px;
+    word-break: break-word;
+    border-color: #e8e8e8;
+    text-align: center;
+    vertical-align: middle;
+}
+table.dataTable.no-footer {
+    border-bottom: 1px solid rgb(228, 228, 228);
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: .55rem;
+}
+.dataTables_length {
+    margin-bottom: 1rem;
+}
+.dataTables_scrollBody {
+    min-height: 660px;
+    max-height: 660px;
+    background-color: rgba(207, 207, 207, 0.1);
+    margin-bottom: 10px;
+} 
+
+.swal2-popup {
+    border-radius: 20px !important; 
+}
+
+.dropzone .dz-preview .dz-image {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 183px;
+    height: 183px;
+    position: relative;
+    display: block;
+    z-index: 10;
+}
